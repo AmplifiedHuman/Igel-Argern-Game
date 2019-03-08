@@ -19,7 +19,7 @@ void printLine();
 char print_token(token *t) {
   if ((*t).col== PINK) return 'P';
   if ((*t).col== RED) return 'R';
-  if ((*t).col== BLU) return 'B';
+  if ((*t).col== BLUE) return 'B';
   if ((*t).col== GREEN) return 'G';
   if ((*t).col== ORANGE) return 'O';
   if ((*t).col== YELLOW) return 'Y';
