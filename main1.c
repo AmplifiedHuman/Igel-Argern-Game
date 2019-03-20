@@ -5,6 +5,7 @@
  * Created on 06 March 2019, 12:11
  */
 
+#include <stdio.h>
 #include "game_init.h"
 #include "game_logic.h"
 /*
@@ -21,6 +22,8 @@ int main(int argc, char** argv) {
     //the number of players
     int numPlayers = 0;
 
+    numPlayers = initialize_players(players);
+    /*
     //creates the squares of the board
     initialize_board(board);
 
@@ -37,6 +40,7 @@ int main(int argc, char** argv) {
 
     //manages the turns of the game and identifies a winner
     play_game(board, players, numPlayers);
+    */
 
     return 0;
 }
