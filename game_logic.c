@@ -1,4 +1,4 @@
-#include "game_init.h"
+#include "game_logic.h"
 #include <stdio.h>
 
 void printLine();
@@ -26,7 +26,7 @@ char print_token(token *t) {
 */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
   printf("                THE BOARD\n");
-  for (int i =0; i < NUM_ROWS; i++) {
+  for (int i = 0; i < NUM_ROWS; i++) {
     //prints an horizontal line
     printLine();
     //prints the row number
