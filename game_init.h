@@ -1,9 +1,3 @@
-/*
- * File:   newfile.h
- * Author: lpasqua
- *
- * Created on 06 March 2019, 12:18
- */
 
 //number of rows of the board
 #define NUM_ROWS 6
@@ -12,9 +6,10 @@
 
 
 //types of squares
-enum stype{ NORMAL, OBSTACLE };
+enum stype { NORMAL, OBSTACLE };
 //colors of tokens
 enum color { RED, BLUE, GREEN, YELLOW, PINK, ORANGE };
+
 //defines a token.
 //Note each token can be associated with a color
 typedef struct token {

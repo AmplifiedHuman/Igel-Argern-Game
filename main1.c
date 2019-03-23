@@ -1,10 +1,3 @@
-/*
- * File:   main.c
- * Author: lpasqua
- *
- * Created on 06 March 2019, 12:11
- */
-
 #include "game_init.h"
 #include "game_logic.h"
 /*

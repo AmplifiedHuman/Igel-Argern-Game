@@ -1,7 +1,5 @@
 #include "game_init.h"
 #include <stdio.h>
-
-
 /*
  * This function creates the board for the first time
  *
