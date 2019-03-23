@@ -15,13 +15,13 @@ int main(int argc, char** argv) {
     int numPlayers = 0;
 
     //creates the squares of the board
-    initialize_board(board);
+    initialise_board(board);
 
     //prints the board
     print_board(board);
 
     //creates the players
-    numPlayers = initialize_players(players);
+    numPlayers = initialise_players(players);
 
     //asks each player to place their tokens
     //on the first column of the board
