@@ -88,7 +88,8 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 			do {
 				printf("\n%s's turn, choose a row to place token: ", players[i].name);
 				fflush(stdout);
-				r = scanf("%d", &nrow);
+				//take input and store number of entered items for validation
+				r = scanf("%d", &nrow); 
 
 				//reset flag
 				flag = 0;
@@ -101,7 +102,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 				}
 
 				//set flag if player doesn't place token as low as possible 
-				//(exception: player can place token on top of his own previously placed token)
+				//(exception: player can place token on top of their own previously placed token)
 				if (board[nrow-1][0].stack[board[nrow-1][0].top].col != players[i].col &&
 						board[nrow-1][0].top != lowest_stack) {
 					flag = 1;
