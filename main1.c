@@ -2,7 +2,7 @@
 /*
  *
  */
-int main(int argc, char** argv) {
+int main(void){//int argc, char** argv) {
 
     //the board is defined as a 2-Dimensional array of squares
     square board[NUM_ROWS][NUM_COLUMNS];

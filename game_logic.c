@@ -10,12 +10,12 @@ void printLine();
  * Output: initial of the colour of the token
  */
 char print_token(token *t) {
-	if ((*t).col== PINK)   return 'P';
-  	if ((*t).col== RED)    return 'R';
+	if ((*t).col== RED)    return 'R';
   	if ((*t).col== BLUE)   return 'B';
   	if ((*t).col== GREEN)  return 'G';
+	if ((*t).col== YELLOW) return 'Y';
+	if ((*t).col== PINK)   return 'P';
   	if ((*t).col== ORANGE) return 'O';
-  	if ((*t).col== YELLOW) return 'Y';
   	return '\0';
 }
 
@@ -25,27 +25,30 @@ char print_token(token *t) {
  * Input: the board to be printed.
  */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
-  	printf("                THE BOARD\n");
+  	printf("\n                THE BOARD\n");
   	for (int i =0; i < NUM_ROWS; i++) {
     	//prints an horizontal line
     	printLine();
     	//prints the row number
     	printf(" %d ", i);
+
+		/*if the square (i,j) is occupied, c is assigned the initial of 
+		  the colour of the token that occupies the square*/
     	char c = '\0' ;
-    	//if the square (i,j) is occupied,
-    	//c is assigned the initial of the colour of the token that occupies the square
+    	
     	for (int j = 0; j < NUM_COLUMNS; j++) {
+			//if stack is not empty, print token at the top of the stack 
       		if (board[i][j].stack != NULL) {
-        	c = print_token(board[i][j].stack);
+        		c = print_token(board[i][j].stack);
       		}
       		//if the square (i,j) is empty
       		else {
         		//c is assigned 'X' if the square represents an obstacle
         		if (board[i][j].type == OBSTACLE)
-        		c = 'X';
+        			c = 'X';
         		//c is assigned an empty space otherwise
         		else
-        		c = ' ';
+        			c = ' ';
       		}
       		printf("| %c ", c);
     	}
