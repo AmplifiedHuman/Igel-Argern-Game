@@ -1,4 +1,3 @@
-
 //number of rows of the board
 #define NUM_ROWS 6
 //number of columns of the board
@@ -6,33 +5,28 @@
 
 
 //types of squares
-enum stype {NORMAL, OBSTACLE};
-//colors of tokens
-enum colour {RED, BLUE, GREEN, YELLOW, PINK, ORANGE};
+enum stype { NORMAL, OBSTACLE };
+//colours of tokens
+enum colour { RED, BLUE, GREEN, YELLOW, PINK, ORANGE };
 
-//defines a token.
-//Note each token can be associated with a color
+//defines a token
 typedef struct token {
+	//each token can be associated with a colour
 	enum colour col;
 } token;
 
-//Defines a square of the board.
+//defines a square of the board
 typedef struct square {
-	//A square can be a NORMAL or an OBSTACLE square
+	//a square can be a NORMAL or an OBSTACLE square
   	enum stype type;
   	//the stack of tokens that can be placed on the board square
   	token *stack;
 } square;
 
-
-
-/*
- * You need to fill this data structure
- * with the information about the player
- * such as a name and a color.
- */
+//defines a player 
 typedef struct player {
-	char name [80];
+	char name [70];
+	//each player has tokens of a particular colour
 	enum colour col;
 } player;
 

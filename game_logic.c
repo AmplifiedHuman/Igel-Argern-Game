@@ -1,14 +1,14 @@
-#include "game_init.h"
 #include <stdio.h>
+#include "game_logic.h"
 
 void printLine();
 
 /*
-* Returns the first letter associated with the colour of the token
-*
-* Input: t - pointer to a token
-* Output: initial of the colour of the token
-*/
+ * Returns the first letter associated with the colour of the token
+ * 
+ * Input: t - pointer to a token
+ * Output: initial of the colour of the token
+ */
 char print_token(token *t) {
 	if ((*t).col== PINK)   return 'P';
   	if ((*t).col== RED)    return 'R';
@@ -20,10 +20,10 @@ char print_token(token *t) {
 }
 
 /*
-* Prints the board
-*
-* Input: the board to be printed.
-*/
+ * Prints the board
+ *
+ * Input: the board to be printed.
+ */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
   	printf("                THE BOARD\n");
   	for (int i =0; i < NUM_ROWS; i++) {
@@ -33,7 +33,7 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
     	printf(" %d ", i);
     	char c = '\0' ;
     	//if the square (i,j) is occupied,
-    	//c is assigned the initial of the color of the token that occupies the square
+    	//c is assigned the initial of the colour of the token that occupies the square
     	for (int j = 0; j < NUM_COLUMNS; j++) {
       		if (board[i][j].stack != NULL) {
         	c = print_token(board[i][j].stack);
@@ -61,25 +61,24 @@ void printLine() {
 }
 
 /*
-* Place tokens in the first column of the board
-*
-* Input: board - a 6x9 array of squares that represents the board
-*        players - the array of the players
-*        numPlayers - the number of players
-*/
+ * Place tokens in the first column of the board
+ *
+ * Input: board - a 6x9 array of squares that represents the board
+ *        players - the array of the players
+ *        numPlayers - the number of players
+ */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
   	// TO BE IMPLEMENTED
 }
 
 
 /*
-* Place tokens in the first column of the board
-*
-* Input: board - a 6x9 array of squares that represents the board
-*        players - the array of the players
-*        numPlayers - the number of players
-*/
-
+ * Manages the logic of the game
+ *
+ * Input: board - a 6x9 array of squares that represents the board
+ *        players - the array of the players
+ *        numPlayers - the number of players
+ */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
   	//TO BE IMPLEMENTED
 }

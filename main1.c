@@ -1,4 +1,3 @@
-#include "game_init.h"
 #include "game_logic.h"
 /*
  *
@@ -22,7 +21,7 @@ int main(int argc, char** argv) {
 
     //creates the players
     numPlayers = initialise_players(players);
-
+/*
     //asks each player to place their tokens
     //on the first column of the board
     place_tokens(board, players, numPlayers);
@@ -30,6 +29,7 @@ int main(int argc, char** argv) {
 
     //manages the turns of the game and identifies a winner
     play_game(board, players, numPlayers);
+*/
 
     return 0;
 }

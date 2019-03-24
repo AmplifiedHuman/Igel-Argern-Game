@@ -23,13 +23,34 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
 }
 
 
- /*
+/*
  * This function creates players for the first time
  *
- * Input: the array of players to be initialized
+ * Input: the array of players to be initialised
  * Output: The number of players of the game
  */
 int initialise_players(player players[]) {
-    //YOU WILL NEED TO IMPLEMENT THIS FUNCTION IN THIS LAB
-    return 0;
+    //number of players
+    int numPlayers = 0; 
+    //names of token colours
+    char *tokenCol[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
+
+    printf("Welcome to the game!\n");
+    printf("Please enter the number of players to continue (2-6): ");
+    fflush(stdout);
+
+    while ((scanf("%d", &numPlayers) != 1 || numPlayers < 2 || numPlayers > 6)) { //validation check
+        printf("Please enter the number of players to continue (2-6): ");
+        while (getchar() != '\n'); //removes invalid input from buffer
+    }
+
+    for (int i = 0; i < numPlayers; i++) {
+        printf("Please enter the name of player #%d: ", i + 1);
+        scanf("%69s", players[i].name);
+
+        players[i].col = (enum colour) i;
+        printf("Token colour: %s\n", tokenCol[players[i].col]);
+    }
+
+    return numPlayers;
 }
