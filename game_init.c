@@ -17,7 +17,8 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
                 //creates a normal square otherwise
                 board[i][j].type = NORMAL;
             }
-            board[i][j].stack = NULL;
+            //initialise top index to -1
+            board[i][j].top = -1;
         }
     }
 }

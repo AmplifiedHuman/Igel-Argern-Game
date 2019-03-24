@@ -9,13 +9,13 @@ void printLine();
  * Input: t - pointer to a token
  * Output: initial of the colour of the token
  */
-char print_token(token *t) {
-	if ((*t).col== RED)    return 'R';
-  	if ((*t).col== BLUE)   return 'B';
-  	if ((*t).col== GREEN)  return 'G';
-	if ((*t).col== YELLOW) return 'Y';
-	if ((*t).col== PINK)   return 'P';
-  	if ((*t).col== ORANGE) return 'O';
+char print_token(token t) {
+	if (t.col == RED)    return 'R';
+  	if (t.col == BLUE)   return 'B';
+  	if (t.col == GREEN)  return 'G';
+	if (t.col == YELLOW) return 'Y';
+	if (t.col == PINK)   return 'P';
+  	if (t.col == ORANGE) return 'O';
   	return '\0';
 }
 
@@ -30,7 +30,7 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
     	//prints an horizontal line
     	printLine();
     	//prints the row number
-    	printf(" %d ", i);
+    	printf(" %d ", i + 1);
 
 		/*if the square (i,j) is occupied, c is assigned the initial of 
 		  the colour of the token that occupies the square*/
@@ -38,8 +38,8 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
     	
     	for (int j = 0; j < NUM_COLUMNS; j++) {
 			//if stack is not empty, print token at the top of the stack 
-      		if (board[i][j].stack != NULL) {
-        		c = print_token(board[i][j].stack);
+      		if (board[i][j].top != -1) {
+        		c = print_token(board[i][j].stack[board[i][j].top]);
       		}
       		//if the square (i,j) is empty
       		else {
@@ -56,7 +56,7 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
   	}
   	printLine();
   	//prints the number of the columns at the end of the board
-  	printf("     0   1   2   3   4   5   6   7   8\n");
+  	printf("     1   2   3   4   5   6   7   8   9\n");
 }
 
 void printLine() {
@@ -71,7 +71,58 @@ void printLine() {
  *        numPlayers - the number of players
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-  	// TO BE IMPLEMENTED
+	//total number of tokens
+	int numTokens = numPlayers * 4;
+	//stores row number entered by player
+	int nrow;
+	//flag to chek if row is valid to place token
+	int flag;
+	//used to validate scanf input
+	int r; 
+	//stores the height of the lowest stack in the first column
+	int lowest_stack = 0;
+
+	do {
+		//ask players to place tokens (clockwise order, one by one)
+		for (int i = 0; i < numPlayers; i++) {
+			do {
+				printf("\n%s's turn, choose a row to place token: ", players[i].name);
+				fflush(stdout);
+				r = scanf("%d", &nrow);
+
+				//reset flag
+				flag = 0;
+
+				//calculate the height of the lowest stack in the column
+				for (int i = 0; i < 6; i++)
+				{
+					if (board[i][0].top < lowest_stack)
+						lowest_stack = board[i][0].top;
+				}
+
+				//set flag if player doesn't place token as low as possible 
+				//(exception: player can place token on top of his own previously placed token)
+				if (board[nrow-1][0].stack[board[nrow-1][0].top].col != players[i].col &&
+						board[nrow-1][0].top != lowest_stack) {
+					flag = 1;
+					printf("\nToken must be placed as low as possible!\n");
+				}
+			} while(r != 1 || nrow < 1 || nrow > 6 || flag == 1);
+
+			//temporary token
+			token t;
+			//assign player's token colour to temporary token 
+			t.col = players[i].col; 
+
+			//place token on top of the chosen square
+			board[nrow-1][0].stack[++board[nrow-1][0].top] = t;
+
+			//decrement the number of tokens left to be placed
+			numTokens--;
+
+			print_board(board);
+		}
+	} while (numTokens != 0); 
 }
 
 

@@ -19,7 +19,10 @@ typedef struct square {
 	//a square can be a NORMAL or an OBSTACLE square
   	enum stype type;
   	//the stack of tokens that can be placed on the board square
-  	token *stack;
+	//max size = 6 players x 4 tokens = 24
+  	token stack[24];
+	//top index of the stack on each square
+	int top;
 } square;
 
 //defines a player 
