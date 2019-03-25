@@ -26,7 +26,7 @@ char print_token(token t) {
  */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
   	printf("\n                THE BOARD\n");
-  	for (int i =0; i < NUM_ROWS; i++) {
+  	for (int i = 0; i < NUM_ROWS; i++) {
     	//prints an horizontal line
     	printLine();
     	//prints the row number
@@ -76,11 +76,13 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 	//stores row number entered by player
 	int nrow;
 	//flag to chek if row is valid to place token
-	int flag;
+	int flag = 1;
 	//used to validate scanf input
 	int r; 
 	//stores the height of the lowest stack in the first column
 	int lowest_stack = 0;
+	//used to check if a non-empty square is chosen, even though empty ones exist
+	int empty_sq = 0;
 
 	do {
 		//ask players to place tokens (clockwise order, one by one)
@@ -93,23 +95,33 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
 				//reset flag
 				flag = 0;
+				//reset square to non-empty
+				empty_sq = 0;	
 
-				//calculate the height of the lowest stack in the column
-				for (int i = 0; i < 6; i++)
-				{
-					if (board[i][0].top < lowest_stack)
-						lowest_stack = board[i][0].top;
-				}
+				if (nrow > 0 && nrow < 7) {
+					for (int i = 0; i < 6; i++) {
+						//calculate the height of the lowest stack in the column
+						if (board[i][0].top < lowest_stack) {
+							lowest_stack = board[i][0].top;
+						}
+						//set empty_sq to 1 if chosen sqaure is non-empty, but empty sqaures exist
+						if (board[i][0].top == -1 && board[nrow-1][0].top != -1) {
+							empty_sq = 1;
+						}
+					}
 
-				//set flag if player doesn't place token as low as possible 
-				//(exception: player can place token on top of their own previously placed token)
-				if (board[nrow-1][0].stack[board[nrow-1][0].top].col != players[i].col &&
-						board[nrow-1][0].top != lowest_stack) {
-					flag = 1;
-					printf("\nToken must be placed as low as possible!\n");
+					//set flag if player doesn't place token as low as possible 
+					//(exception: player is not forced to block their own tokens)
+					if (empty_sq == 1 || (board[nrow-1][0].top != -1 &&
+					     	(board[nrow-1][0].stack[board[nrow-1][0].top].col == players[i].col ||
+						 		 board[nrow-1][0].top != lowest_stack))) {
+						flag = 1;
+						printf("\nYou are not forced to block yourself.");
+						printf("\nToken must be placed as low as possible!\n");
+					}
 				}
 			} while(r != 1 || nrow < 1 || nrow > 6 || flag == 1);
-
+			
 			//temporary token
 			token t;
 			//assign player's token colour to temporary token 
@@ -120,6 +132,9 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
 			//decrement the number of tokens left to be placed
 			numTokens--;
+
+			//increment the size of the lowest stack
+			lowest_stack++;
 
 			print_board(board);
 		}
