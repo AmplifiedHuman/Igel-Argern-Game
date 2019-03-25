@@ -75,15 +75,15 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 	int numTokens = numPlayers * 4;
 	//stores row number entered by player
 	int nrow;
-	//flag to chek if row is valid to place token
-	int flag = 1;
 	//used to validate scanf input
 	int r; 
+	//flag to chek if row is valid to place token
+	int flag;
+	//used to check if a non-empty square is chosen, even though empty ones exist
+	int empty_sq;
 	//stores the height of the lowest stack in the first column
 	int lowest_stack = 0;
-	//used to check if a non-empty square is chosen, even though empty ones exist
-	int empty_sq = 0;
-
+	
 	do {
 		//ask players to place tokens (clockwise order, one by one)
 		for (int i = 0; i < numPlayers; i++) {
@@ -93,7 +93,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 				//take input and store number of entered items for validation
 				r = scanf("%d", &nrow); 
 
-				//reset flag
+				//reset flag to 0
 				flag = 0;
 				//reset square to non-empty
 				empty_sq = 0;	
