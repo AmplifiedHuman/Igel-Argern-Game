@@ -32,13 +32,13 @@ int main(int argc, char** argv) {
 
     //asks each player to place their tokens
     //on the first column of the board
-    /*
+
     place_tokens(board, players, numPlayers);
 
 
     //manages the turns of the game and identifies a winner
-    play_game(board, players, numPlayers);
-    */
+    //play_game(board, players, numPlayers);
+
 
     return 0;
 }

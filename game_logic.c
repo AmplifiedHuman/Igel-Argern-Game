@@ -1,5 +1,7 @@
 #include "game_logic.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 void printLine();
 
@@ -68,7 +70,45 @@ void printLine() {
 *        numPlayers - the number of players
 */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-  // TO BE IMPLEMENTED
+
+  int minNumOfTokens = 0;
+  int selectedSquare = 0;
+  bool isValidInput = false;
+  int flag = 0;
+
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < numPlayers; j++) {
+      isValidInput = false;
+      while (!isValidInput) {
+        printf("Player %d, %s please select a square (0-5):", j + 1, players[j].name);
+        fflush(stdout);
+        flag = scanf("%d", &selectedSquare);
+        if (flag != 1 || selectedSquare < 0 || selectedSquare > 5) {
+          printf("Input must be in range (0 - 5).\n");
+        } else if ((board[selectedSquare][0].stack != NULL) && (board[selectedSquare][0].stack->col == players[j].col)) {
+          printf("Token can't be placed on the square with the same colour.\n");
+        } else if (board[selectedSquare][0].numTokens != minNumOfTokens) {
+          printf("Token must be placed on the lowest stack.\n");
+        } else {
+          isValidInput = true;
+        }
+
+        while (getchar() != '\n'); //removes invalid input from buffer
+        puts("");
+      }
+
+      board[selectedSquare][0].stack = (token *)malloc(sizeof(token));
+      board[selectedSquare][0].stack->col = players[j].col;
+      board[selectedSquare][0].numTokens++;
+      //need some time to understand, write formula on paper, very smart
+      //basically find the min number of tokens at each iteration/rpund
+      if (((numPlayers * i) + j + 1) % NUM_ROWS == 0) {
+        minNumOfTokens++;
+      }
+      print_board(board);
+    }
+  }
+
 }
 
 
