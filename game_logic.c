@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 void printLine();
+int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens);
 
 /*
 * Returns the first letter associated with the color of the token
@@ -73,24 +74,28 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
   int minNumOfTokens = 0;
   int selectedSquare = 0;
-  bool isValidInput = false;
-  int flag = 0;
+  bool isValidInput = false; //boolean to check for valid input
+  int flag = 0; //indicate if scanf has received valid input
 
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < numPlayers; j++) {
+
       isValidInput = false;
+
       while (!isValidInput) {
         printf("Player %d, %s please select a square (0-5):", j + 1, players[j].name);
         fflush(stdout);
         flag = scanf("%d", &selectedSquare);
         if (flag != 1 || selectedSquare < 0 || selectedSquare > 5) {
           printf("Input must be in range (0 - 5).\n");
-        } else if ((board[selectedSquare][0].stack != NULL) && (board[selectedSquare][0].stack->col == players[j].col)) {
+        } else if (totalMinTokens(board, minNumOfTokens) != 1 && //checks if theres only one free spot
+                    board[selectedSquare][0].stack != NULL &&  //checks if stack is null
+                    board[selectedSquare][0].stack->col == players[j].col) { //checks if player color matches square colour
           printf("Token can't be placed on the square with the same colour.\n");
         } else if (board[selectedSquare][0].numTokens != minNumOfTokens) {
           printf("Token must be placed on the lowest stack.\n");
         } else {
-          isValidInput = true;
+          isValidInput = true; //if none  of these cases happen, input is valid
         }
 
         while (getchar() != '\n'); //removes invalid input from buffer
@@ -122,4 +127,19 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
   //TO BE IMPLEMENTED
+}
+
+/*
+* Checks how many rows has minimum tokens
+*
+*
+*/
+int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens) {
+  int count = 0;
+  for (int j = 0; j < NUM_ROWS; j++) {
+    if (board[j][0].numTokens == minNumOfTokens) {
+      count++;
+    }
+  }
+  return count;
 }
