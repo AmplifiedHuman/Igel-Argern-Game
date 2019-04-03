@@ -79,8 +79,7 @@ void printLine() {
  *        numPlayers - the number of players
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-
-  	int minNumOfTokens = 0;
+	int minNumOfTokens = 0; //number of tokens in lowest stack 
   	int selectedSquare = 0;
   	bool isValidInput = false; //boolean to check for valid input
   	int flag = 0; //indicate if scanf has received valid input
@@ -140,7 +139,6 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
  *        numPlayers - the number of players
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-  	srand(time(NULL));
   	int diceRoll;
   	for (int i  = 0; i < numPlayers; i++) {
     	print_board(board);
