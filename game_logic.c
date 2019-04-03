@@ -3,15 +3,6 @@
 #include <stdbool.h>
 #include <time.h>
 #include "game_logic.h"
-
-//function prototypes
-void printLine();
-bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens, enum colour col);
-int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens);
-bool checkWin(player players[], int numPlayers);
-void push(token **startPointer, enum colour col);
-void pop(token **startPointer);
-
 /*
 * Returns the first letter associated with the color of the token
 *
@@ -80,7 +71,7 @@ void printLine() {
  *        numPlayers - the number of players
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-	int minNumOfTokens = 0; //number of tokens in lowest stack 
+	int minTokens = 0; //number of tokens in lowest stack 
   	int selectedSquare = 0;
   	bool isValidInput = false; //boolean to check for valid input
   	int flag = 0; //indicate if scanf has received valid input
@@ -101,16 +92,16 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
           			printf("Input must be in range (1 - 6).");
         		} 
 					    //checks if there is a lowest stack with a different colour
-				else if ((minWithDiffColour(board, minNumOfTokens, players[j].col) ||
+				else if ((minWithDiffColour(board, minTokens, players[j].col) ||
 						//checks if there is only 1 free spot
-						totalMinTokens(board, minNumOfTokens) != 1) &&
+						totalMinSquares(board, minTokens) != 1) &&
 						//checks if stack is null
         				board[selectedSquare][0].stack != NULL && 
 						//checks if player color matches square colour
         				board[selectedSquare][0].stack->col == players[j].col) { 
           			printf("Token can't be placed on top of your own token!");
         		} 
-				else if (board[selectedSquare][0].numTokens != minNumOfTokens) {
+				else if (board[selectedSquare][0].numTokens != minTokens) {
           			printf("Token must be placed on the lowest stack.");
         		} 
 				else {
@@ -127,16 +118,24 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
       		//need some time to understand, write formula on paper, very smart
       		//basically find the min number of tokens at each iteration/round
       		if (((numPlayers * i) + j + 1) % NUM_ROWS == 0) {
-        		minNumOfTokens++;
+        		minTokens++;
       		}
       		print_board(board);
     	}
   	}
 }
 
-bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens, enum colour col) {
+/*
+ * Returns true if there is a square with minimum number of tokens whose colour is 
+ * not the same as the player's colour.
+ * 
+ * Input: board - a 6x9 array of squares that represents the board
+ * minTokens - number of tokens in lowest stack 
+ * col - player's chosen colour
+ */
+bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col) {
 	for (int i = 0; i < 6; i++) {
-		if (board[i][0].stack != NULL && board[i][0].numTokens == minNumOfTokens 
+		if (board[i][0].stack != NULL && board[i][0].numTokens == minTokens 
 				&& board[i][0].stack->col != col)
 			return false;
 	}
@@ -147,13 +146,13 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens, 
  * Checks how many rows have minimum tokens
  * 
  * Input: board - a 6x9 array of squares that represents the board
- * 		  minNumOfTokens - number of tokens in lowest stack 
+ * 		  minTokens - number of tokens in lowest stack 
  * Output: number of rows with minimum tokens
  */
-int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens) {
+int totalMinSquares(square board[NUM_ROWS][NUM_COLUMNS], int minTokens) {
   	int count = 0;
   	for (int j = 0; j < NUM_ROWS; j++) {
-    	if (board[j][0].numTokens == minNumOfTokens) {
+    	if (board[j][0].numTokens == minTokens) {
       		count++;
     	}
   	}
@@ -178,8 +177,17 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
   	}
 }
 
+/* 
+ * Return true if a player has at least 3 tokens in last column, i.e.
+ * the game has been won
+ * 
+ * Input: players - the array of players
+ *        numPlayers - the number of players
+ */
 bool checkWin(player players[], int numPlayers) {
+	//iterate through all the players
   	for (int i = 0; i < numPlayers; i++) {
+		//check if we have a winner
     	if (players[i].numTokensLastCol >= 3) {
       		return true;
     	}
@@ -187,18 +195,36 @@ bool checkWin(player players[], int numPlayers) {
   	return false;
 }
 
-void push(token **startPointer, enum colour col) {
+/*
+ * Place a token on the stack
+ * 
+ * Input: top - pointer to topmost token on stack
+ */
+void push(token **top, enum colour col) {
+	//allocate memory to temporary pointer
   	token *temp = malloc(sizeof(token));
+	//assign player's token colour to temporary pointer
   	temp->col = col;
-  	temp->nextPtr = *startPointer;
-  	*startPointer = temp;
+	//let the temporary pointer point to the top pointer
+  	temp->nextPtr = *top;
+	//make the new token the topmost in the stack
+  	*top = temp;
 }
 
-void pop(token **startPointer) {
-  	if (*startPointer == NULL) {
+/*
+ * Remove a token from the stack
+ * 
+ * Input: top - pointer to topmost token on stack
+ */
+void pop(token **top) {
+	//if the stack is empty, then exit
+  	if (*top == NULL) {
     	return;
   	}
-  	token *temp = *startPointer;
-  	*startPointer = (*startPointer)->nextPtr;
+	//make temporary pointer the top pointer
+  	token *temp = *top;
+	//let topmost pointer point to 2nd topmost pointer
+  	*top = (*top)->nextPtr;
+	//get rid of the temporary pointer
   	free(temp);
 }
