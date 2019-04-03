@@ -30,30 +30,32 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
  /*
  * This function creates players for the first time
  *
- * Input: the array of players to be initialized
+ * Input: the array of players to be initialised
  * Output: The number of players of the game
  */
 int initialise_players(player players[]) {
-  char *colors[] = {"Red", "Blue", "Green", "Yellow", "Pink", "Orange"};
-  int numPlayers = 0; //number of Players
-  printf("Welcome to the game!\n");
-  printf("Please enter the number of players to continue (2-6): ");
-  fflush(stdout);
+    //number of players
+    int numPlayers = 0; 
+    //names of token colours
+    char *tokenCol[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
 
-  while ((scanf("%d", &numPlayers) != 1 || numPlayers < 2 || numPlayers > 6)) { //validation check
+    printf("Welcome to the game!\n");
     printf("Please enter the number of players to continue (2-6): ");
-    while (getchar() != '\n'); //removes invalid input from buffer
-  }
+    fflush(stdout);
 
-  for (int i = 0; i < numPlayers; i++) {
-    player tempPlayer;
-    printf("Please enter the name of the No.%d player: ", i + 1);
-    scanf("%69s", tempPlayer.name);
-    tempPlayer.col = (enum colour) i;
-    tempPlayer.numTokensLastCol = 0;
-    players[i] = tempPlayer;
-    printf("Your assigned color is: %s\n", colors[i]);
-  }
-  puts("");
-  return numPlayers;
+    while ((scanf("%d", &numPlayers) != 1 || numPlayers < 2 || numPlayers > 6)) { //validation check
+        printf("Please enter the number of players to continue (2-6): ");
+        while (getchar() != '\n'); //removes invalid input from buffer
+    }
+
+    for (int i = 0; i < numPlayers; i++) {
+        printf("Please enter the name of player #%d: ", i + 1);
+        scanf("%69s", players[i].name);
+
+        players[i].col = (enum colour) i;
+        players[i].numTokensLastCol = 0;
+        printf("Token colour: %s\n", tokenCol[players[i].col]);
+    }
+
+    return numPlayers;
 }
