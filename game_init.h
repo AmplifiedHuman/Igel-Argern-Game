@@ -19,6 +19,7 @@ enum color { RED, BLUE, GREEN, YELLOW, PINK, ORANGE };
 //Note each token can be associated with a color
 typedef struct token {
   enum color col;
+  struct token *nextPtr;
 } token;
 
 //Defines a square of the board.
@@ -27,6 +28,8 @@ typedef struct square {
   enum stype type;
   //the stack of tokens that can be placed on the board square
   token *stack;
+
+  int numTokens;
 } square;
 
 
@@ -37,8 +40,9 @@ typedef struct square {
  * such as a name and a color.
  */
 typedef struct player {
-
-  ;
+  char name[70];
+  enum color col;
+  int numTokensLastCol;
 } player;
 
 

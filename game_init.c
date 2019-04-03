@@ -20,6 +20,7 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]) {
                 board[i][j].type = NORMAL;
             }
             board[i][j].stack = NULL;
+            board[i][j].numTokens = 0;
         }
     }
 }
@@ -32,6 +33,26 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]) {
  * Output: The number of players of the game
  */
 int initialize_players(player players[]) {
-  //YOU WILL NEED TO IMPLEMENT THIS FUNCTION IN THIS LAB
-  return 0;
+  char *colors[] = {"Red", "Blue", "Green", "Yellow", "Pink", "Orange"};
+  int numPlayers = 0; //number of Players
+  printf("Welcome to the game!\n");
+  printf("Please enter the number of players to continue (2-6): ");
+  fflush(stdout);
+
+  while ((scanf("%d", &numPlayers) != 1 || numPlayers < 2 || numPlayers > 6)) { //validation check
+    printf("Please enter the number of players to continue (2-6): ");
+    while (getchar() != '\n'); //removes invalid input from buffer
+  }
+
+  for (int i = 0; i < numPlayers; i++) {
+    player tempPlayer;
+    printf("Please enter the name of the No.%d player: ", i + 1);
+    scanf("%69s", tempPlayer.name);
+    tempPlayer.col = (enum color) i;
+    tempPlayer.numTokensLastCol = 0;
+    players[i] = tempPlayer;
+    printf("Your assigned color is: %s\n", colors[i]);
+  }
+  puts("");
+  return numPlayers;
 }
