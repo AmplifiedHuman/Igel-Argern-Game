@@ -7,7 +7,7 @@
 void printLine();
 int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens);
 bool checkWin(player players[], int numPlayers);
-void push(token **startPointer, token *data);
+void push(token **startPointer, enum color col);
 void pop(token **startPointer);
 
 /*
@@ -106,9 +106,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
         while (getchar() != '\n'); //removes invalid input from buffer
         puts("");
       }
-      token *temp = (token *)malloc(sizeof(token));
-      temp->col = players[j].col;
-      push(&board[selectedSquare][0].stack, temp);
+      push(&board[selectedSquare][0].stack, players[j].col);
       board[selectedSquare][0].numTokens++;
       //need some time to understand, write formula on paper, very smart
       //basically find the min number of tokens at each iteration/rpund
@@ -164,9 +162,11 @@ bool checkWin(player players[], int numPlayers) {
   return false;
 }
 
-void push(token **startPointer, token *data) {
-  data->nextPtr = *startPointer;
-  *startPointer = data;
+void push(token **startPointer, enum color col) {
+  token *temp = malloc(sizeof(token));
+  temp->col = col;
+  temp->nextPtr = *startPointer;
+  *startPointer = temp;
 }
 
 void pop(token **startPointer) {
