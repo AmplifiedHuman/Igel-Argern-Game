@@ -19,6 +19,7 @@ enum color { RED, BLUE, GREEN, YELLOW, PINK, ORANGE };
 //Note each token can be associated with a color
 typedef struct token {
   enum color col;
+  struct token *nextPtr;
 } token;
 
 //Defines a square of the board.
