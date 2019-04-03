@@ -12,6 +12,8 @@ enum colour { RED, BLUE, GREEN, YELLOW, PINK, ORANGE };
 typedef struct token {
 	//each token can be associated with a colour
 	enum colour col;
+	//every token has a pointer to the next token on the stack
+	struct token *nextPtr;
 } token;
 
 //defines a square of the board
@@ -19,10 +21,9 @@ typedef struct square {
 	//a square can be a NORMAL or an OBSTACLE square
   	enum stype type;
   	//the stack of tokens that can be placed on the board square
-	//max size = 6 players x 4 tokens = 24
-  	token stack[24];
-	//top index of the stack on each square
-	int top;
+  	token *stack;
+	//keeps count of number of tokens on each square
+	int numTokens;
 } square;
 
 //defines a player 
@@ -30,6 +31,8 @@ typedef struct player {
 	char name [70];
 	//each player has tokens of a particular colour
 	enum colour col;
+	//stores how many tokens the player has in the last column of the board
+	int numTokensLastCol;
 } player;
 
 
@@ -37,7 +40,6 @@ typedef struct player {
  * This function creates the board for the first time
  *
  * Input: board - a 6x9 array of squares
- *
  */
 void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]);
 
@@ -46,6 +48,5 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]);
  *
  * Input: the array of players to be initialized
  * Output: The number of players of the game
- *
  */
 int initialise_players(player players[]);

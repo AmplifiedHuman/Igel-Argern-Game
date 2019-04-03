@@ -4,10 +4,9 @@
  * This function creates the board for the first time
  *
  * Input: board - a 6x9 array of squares
- *
  */
 void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
-    for (int i = 0; i< NUM_ROWS; i++) {
+   for (int i = 0; i< NUM_ROWS; i++) {
         for (int j = 0; j < NUM_COLUMNS; j++) {
             //creates an obstacle square at positions (0,3), (1,6), (2,4), (3,5), (4,2) and (5,7)
             if ((i == 0 && j == 3) || (i == 1 && j == 6) || (i ==2 && j == 4)
@@ -17,8 +16,10 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
                 //creates a normal square otherwise
                 board[i][j].type = NORMAL;
             }
-            //initialise top index to -1
-            board[i][j].top = -1;
+            //initialise stack pointer to null
+            board[i][j].stack = NULL;
+            //set initial number of tokens to 0
+            board[i][j].numTokens = 0;
         }
     }
 }
@@ -50,6 +51,7 @@ int initialise_players(player players[]) {
         scanf("%69s", players[i].name);
 
         players[i].col = (enum colour) i;
+        players[i].numTokensLastCol = 0;
         printf("Token colour: %s\n", tokenCol[players[i].col]);
     }
 

@@ -1,21 +1,29 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
 #include "game_logic.h"
 
+//function prototypes
 void printLine();
+int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens);
+bool checkWin(player players[], int numPlayers);
+void push(token **startPointer, enum colour col);
+void pop(token **startPointer);
 
 /*
- * Returns the first letter associated with the colour of the token
- * 
- * Input: t - pointer to a token
- * Output: initial of the colour of the token
- */
-char print_token(token t) {
-	if (t.col == RED)    return 'R';
-  	if (t.col == BLUE)   return 'B';
-  	if (t.col == GREEN)  return 'G';
-	if (t.col == YELLOW) return 'Y';
-	if (t.col == PINK)   return 'P';
-  	if (t.col == ORANGE) return 'O';
+* Returns the first letter associated with the color of the token
+*
+* Input: t - pointer to a token
+* Output: initial of the color of the token
+*/
+char print_token(token *t) {
+	if (t->col == RED)    return 'R';
+  	if (t->col == BLUE)   return 'B';
+  	if (t->col == GREEN)  return 'G';
+	if (t->col == YELLOW) return 'Y';
+	if (t->col == PINK)   return 'P';
+  	if (t->col == ORANGE) return 'O';
   	return '\0';
 }
 
@@ -38,8 +46,8 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
     	
     	for (int j = 0; j < NUM_COLUMNS; j++) {
 			//if stack is not empty, print token at the top of the stack 
-      		if (board[i][j].top != -1) {
-        		c = print_token(board[i][j].stack[board[i][j].top]);
+      		if (board[i][j].stack != NULL) {
+        		c = print_token(board[i][j].stack);
       		}
       		//if the square (i,j) is empty
       		else {
@@ -71,84 +79,114 @@ void printLine() {
  *        numPlayers - the number of players
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-	//total number of tokens
-	int numTokens = numPlayers * 4;
-	//stores row number entered by player
-	int nrow;
-	//used to validate scanf input
-	int r; 
-	//flag to chek if row is valid to place token
-	int flag;
-	//used to check if a non-empty square is chosen, even though empty ones exist
-	int empty_sq;
-	//stores the height of the lowest stack in the first column
-	int lowest_stack = 0;
-	
-	do {
-		//ask players to place tokens (clockwise order, one by one)
-		for (int i = 0; i < numPlayers; i++) {
-			do {
-				printf("\n%s's turn, choose a row to place token: ", players[i].name);
-				fflush(stdout);
-				//take input and store number of entered items for validation
-				r = scanf("%d", &nrow); 
 
-				//reset flag to 0
-				flag = 0;
-				//reset square to non-empty
-				empty_sq = 0;	
+  	int minNumOfTokens = 0;
+  	int selectedSquare = 0;
+  	bool isValidInput = false; //boolean to check for valid input
+  	int flag = 0; //indicate if scanf has received valid input
 
-				if (nrow > 0 && nrow < 7) {
-					for (int i = 0; i < 6; i++) {
-						//calculate the height of the lowest stack in the column
-						if (board[i][0].top < lowest_stack) {
-							lowest_stack = board[i][0].top;
-						}
-						//set empty_sq to 1 if chosen sqaure is non-empty, but empty sqaures exist
-						if (board[i][0].top == -1 && board[nrow-1][0].top != -1) {
-							empty_sq = 1;
-						}
-					}
+  	for (int i = 0; i < 4; i++) {
+    	for (int j = 0; j < numPlayers; j++) {
 
-					//set flag if player doesn't place token as low as possible 
-					//(exception: player is not forced to block their own tokens)
-					if (empty_sq == 1 || (board[nrow-1][0].top != -1 &&
-					     	(board[nrow-1][0].stack[board[nrow-1][0].top].col == players[i].col ||
-						 		 board[nrow-1][0].top != lowest_stack))) {
-						flag = 1;
-						printf("\nYou are not forced to block yourself.");
-						printf("\nToken must be placed as low as possible!\n");
-					}
-				}
-			} while(r != 1 || nrow < 1 || nrow > 6 || flag == 1);
-			
-			//temporary token
-			token t;
-			//assign player's token colour to temporary token 
-			t.col = players[i].col; 
+      		isValidInput = false;
 
-			//place token on top of the chosen square
-			board[nrow-1][0].stack[++board[nrow-1][0].top] = t;
+      		while (!isValidInput) {
+     			printf("Player %d, %s please select a square (1-6): ", j + 1, players[j].name);
+        		fflush(stdout);
+        		flag = scanf("%d", &selectedSquare);
+        		selectedSquare--;
 
-			//decrement the number of tokens left to be placed
-			numTokens--;
+        		if (flag != 1 || selectedSquare < 0 || selectedSquare > 5) {
+          			printf("Input must be in range (1 - 6).\n");
+        		} 
+						//checks if theres only one free spot
+				else if (totalMinTokens(board, minNumOfTokens) != 1 && 
+						//checks if stack is null
+        				board[selectedSquare][0].stack != NULL &&  
+						//checks if player color matches square colour
+        				board[selectedSquare][0].stack->col == players[j].col) { 
+          			printf("Token can't be placed on the square with the same colour.\n");
+        		} 
+				else if (board[selectedSquare][0].numTokens != minNumOfTokens) {
+          			printf("Token must be placed on the lowest stack.\n");
+        		} 
+				else {
+          			isValidInput = true; //if none  of these cases happen, input is valid
+        		}
 
-			//increment the size of the lowest stack
-			lowest_stack++;
+        		while (getchar() != '\n'); //removes invalid input from buffer
+        		puts("");
+     		}
 
-			print_board(board);
-		}
-	} while (numTokens != 0); 
+      		push(&board[selectedSquare][0].stack, players[j].col);
+      		board[selectedSquare][0].numTokens++;
+
+      		//need some time to understand, write formula on paper, very smart
+      		//basically find the min number of tokens at each iteration/round
+      		if (((numPlayers * i) + j + 1) % NUM_ROWS == 0) {
+        		minNumOfTokens++;
+      		}
+      		print_board(board);
+    	}
+  	}
 }
 
 
 /*
- * Manages the logic of the game
+ * Place tokens in the first column of the board
  *
  * Input: board - a 6x9 array of squares that represents the board
  *        players - the array of the players
  *        numPlayers - the number of players
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-  	//TO BE IMPLEMENTED
+  	srand(time(NULL));
+  	int diceRoll;
+  	for (int i  = 0; i < numPlayers; i++) {
+    	print_board(board);
+    	diceRoll = rand() % 6 + 1;
+    	printf("Player %d, your dice roll is %d.\n", i + 1, diceRoll);
+  	}
+}
+
+/*
+ * Checks how many rows have minimum tokens
+ * 
+ * Input: board - a 6x9 array of squares that represents the board
+ * 		  minNumOfTokens - number of tokens in lowest stack 
+ * Output: number of rows with minimum tokens
+ */
+int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens) {
+  	int count = 0;
+  	for (int j = 0; j < NUM_ROWS; j++) {
+    	if (board[j][0].numTokens == minNumOfTokens) {
+      		count++;
+    	}
+  	}
+  	return count;
+}
+
+bool checkWin(player players[], int numPlayers) {
+  	for (int i = 0; i < numPlayers; i++) {
+    	if (players[i].numTokensLastCol >= 3) {
+      		return true;
+    	}
+  	}
+  	return false;
+}
+
+void push(token **startPointer, enum colour col) {
+  	token *temp = malloc(sizeof(token));
+  	temp->col = col;
+  	temp->nextPtr = *startPointer;
+  	*startPointer = temp;
+}
+
+void pop(token **startPointer) {
+  	if (*startPointer == NULL) {
+    	return;
+  	}
+  	token *temp = *startPointer;
+  	*startPointer = (*startPointer)->nextPtr;
+  	free(temp);
 }

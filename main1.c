@@ -1,9 +1,9 @@
+#include <stdio.h>
 #include "game_logic.h"
 /*
- *
+ * main function to initialise board, players, place tokens and play game
  */
 int main(void) {
-
     //the board is defined as a 2-Dimensional array of squares
     square board[NUM_ROWS][NUM_COLUMNS];
 
@@ -22,14 +22,12 @@ int main(void) {
     //creates the players
     numPlayers = initialise_players(players);
 
-    //asks each player to place their tokens
-    //on the first column of the board
+    /*asks each player to place their tokens
+    on the first column of the board*/
     place_tokens(board, players, numPlayers);
 
-/*
     //manages the turns of the game and identifies a winner
     play_game(board, players, numPlayers);
-*/
 
     return 0;
 }
