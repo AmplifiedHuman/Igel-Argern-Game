@@ -6,6 +6,7 @@
 
 //function prototypes
 void printLine();
+bool noMinWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens, enum colour col);
 bool checkWin(player players[], int numPlayers);
 void push(token **startPointer, enum colour col);
 void pop(token **startPointer);
@@ -100,9 +101,10 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
         		} 
 					    /*checks if number of tokens on selected square isn't the
 						lowest stack when colour on stack is player's colour itself*/
-				else if (board[selectedSquare][0].numTokens != minNumOfTokens && 
+				else if (//board[selectedSquare][0].numTokens != minNumOfTokens && 
 						//checks if stack is null
-        				board[selectedSquare][0].stack != NULL &&  
+        				board[selectedSquare][0].stack != NULL && 
+						noMinWithDiffColour(board, minNumOfTokens, players[j].col) &&
 						//checks if player color matches square colour
         				board[selectedSquare][0].stack->col == players[j].col) { 
           			printf("Token can't be placed on top of your own token!");
@@ -129,6 +131,14 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
       		print_board(board);
     	}
   	}
+}
+
+bool MinWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens, enum colour col) {
+	for (int i = 0; i < 6; i++) {
+		if (board[i][0].stack != NULL && board[i][0].numTokens == minNumOfTokens && board[i][0].stack->col != col)
+			return false;
+	}
+	return true;
 }
 
 /*
