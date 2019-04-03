@@ -19,7 +19,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 
 
 /*
- *  * Manages the logic of the game
+ * Manages the logic of the game
  *
  * Input: board - a 6x9 array of squares that represents the board
  *        players - the array of the players

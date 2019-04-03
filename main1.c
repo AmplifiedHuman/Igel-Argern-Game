@@ -1,17 +1,9 @@
-/*
- * File:   main.c
- * Author: lpasqua
- *
- * Created on 06 March 2019, 12:11
- */
-
 #include <stdio.h>
 #include "game_logic.h"
 /*
- *
+ * main function to initialise board, players, place tokens and play game
  */
-int main(int argc, char** argv) {
-
+int main(void) {
     //the board is defined as a 2-Dimensional array of squares
     square board[NUM_ROWS][NUM_COLUMNS];
 
@@ -22,23 +14,20 @@ int main(int argc, char** argv) {
     int numPlayers = 0;
 
     //creates the squares of the board
-    initialize_board(board);
+    initialise_board(board);
 
     //prints the board
     print_board(board);
 
     //creates the players
-    numPlayers = initialize_players(players);
+    numPlayers = initialise_players(players);
 
-    //asks each player to place their tokens
-    //on the first column of the board
-
+    /*asks each player to place their tokens
+    on the first column of the board*/
     place_tokens(board, players, numPlayers);
-
 
     //manages the turns of the game and identifies a winner
     play_game(board, players, numPlayers);
-
 
     return 0;
 }

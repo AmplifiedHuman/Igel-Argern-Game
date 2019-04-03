@@ -6,9 +6,8 @@
  * This function creates the board for the first time
  *
  * Input: board - a 6x9 array of squares
- *
  */
-void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]) {
+void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
    for (int i = 0; i< NUM_ROWS; i++) {
         for (int j = 0; j < NUM_COLUMNS; j++) {
             //creates an obstacle square at positions (0,3), (1,6), (2,4), (3,5), (4,2) and (5,7)
@@ -19,7 +18,9 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]) {
                 //creates a normal square otherwise
                 board[i][j].type = NORMAL;
             }
+            //initialise stack pointer to null
             board[i][j].stack = NULL;
+            //set initial number of tokens to 0
             board[i][j].numTokens = 0;
         }
     }
@@ -32,7 +33,7 @@ void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]) {
  * Input: the array of players to be initialized
  * Output: The number of players of the game
  */
-int initialize_players(player players[]) {
+int initialise_players(player players[]) {
   char *colors[] = {"Red", "Blue", "Green", "Yellow", "Pink", "Orange"};
   int numPlayers = 0; //number of Players
   printf("Welcome to the game!\n");
@@ -48,7 +49,7 @@ int initialize_players(player players[]) {
     player tempPlayer;
     printf("Please enter the name of the No.%d player: ", i + 1);
     scanf("%69s", tempPlayer.name);
-    tempPlayer.col = (enum color) i;
+    tempPlayer.col = (enum colour) i;
     tempPlayer.numTokensLastCol = 0;
     players[i] = tempPlayer;
     printf("Your assigned color is: %s\n", colors[i]);

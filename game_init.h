@@ -1,48 +1,38 @@
-/*
- * File:   newfile.h
- * Author: lpasqua
- *
- * Created on 06 March 2019, 12:18
- */
-
 //number of rows of the board
 #define NUM_ROWS 6
 //number of columns of the board
 #define NUM_COLUMNS 9
 
-
 //types of squares
-enum stype{ NORMAL, OBSTACLE };
-//colors of tokens
-enum color { RED, BLUE, GREEN, YELLOW, PINK, ORANGE };
-//defines a token.
-//Note each token can be associated with a color
+enum stype { NORMAL, OBSTACLE };
+//colours of tokens
+enum colour { RED, BLUE, GREEN, YELLOW, PINK, ORANGE };
+
+//defines a token
 typedef struct token {
-  enum color col;
-  struct token *nextPtr;
+	//each token can be associated with a colour
+	enum colour col;
+	//every token has a pointer to the next token on the stack
+	struct token *nextPtr;
 } token;
 
-//Defines a square of the board.
+//defines a square of the board
 typedef struct square {
-  //A square can be a NORMAL or an OBSTACLE square
-  enum stype type;
-  //the stack of tokens that can be placed on the board square
-  token *stack;
-
-  int numTokens;
+	//a square can be a NORMAL or an OBSTACLE square
+  	enum stype type;
+  	//the stack of tokens that can be placed on the board square
+  	token *stack;
+	//keeps count of number of tokens on each square
+	int numTokens;
 } square;
 
-
-
-/*
- * You need to fill this data structure
- * with the information about the player
- * such as a name and a color.
- */
+//defines a player 
 typedef struct player {
-  char name[70];
-  enum color col;
-  int numTokensLastCol;
+	char name [70];
+	//each player has tokens of a particular colour
+	enum colour col;
+	//stores how many tokens the player has in the last column of the board
+	int numTokensLastCol;
 } player;
 
 
@@ -50,15 +40,13 @@ typedef struct player {
  * This function creates the board for the first time
  *
  * Input: board - a 6x9 array of squares
- *
  */
-void initialize_board(square board[NUM_ROWS][NUM_COLUMNS]);
+void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]);
 
 /*
  * This function creates players for the first time
  *
  * Input: the array of players to be initialized
  * Output: The number of players of the game
- *
  */
-int initialize_players(player players[]);
+int initialise_players(player players[]);
