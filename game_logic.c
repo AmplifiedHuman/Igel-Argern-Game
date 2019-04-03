@@ -6,7 +6,6 @@
 
 //function prototypes
 void printLine();
-int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens);
 bool checkWin(player players[], int numPlayers);
 void push(token **startPointer, enum colour col);
 void pop(token **startPointer);
@@ -97,10 +96,11 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
         		selectedSquare--;
 
         		if (flag != 1 || selectedSquare < 0 || selectedSquare > 5) {
-          			printf("Input must be in range (1 - 6).\n");
+          			printf("Input must be in range (1 - 6).");
         		} 
-						//checks if theres only one free spot
-				else if (totalMinTokens(board, minNumOfTokens) != 1 && 
+					    /*checks if number of tokens on selected square isn't the
+						lowest stack when colour on stack is player's colour itself*/
+				else if (board[selectedSquare][0].numTokens != minNumOfTokens && 
 						//checks if stack is null
         				board[selectedSquare][0].stack != NULL &&  
 						//checks if player color matches square colour
@@ -130,24 +130,6 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
     	}
   	}
 }
-
-/*
- * Checks how many rows have minimum tokens
- * 
- * Input: board - a 6x9 array of squares that represents the board
- * 		  minNumOfTokens - number of tokens in lowest stack 
- * Output: number of rows with minimum tokens
- */
-int totalMinTokens(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens) {
-  	int count = 0;
-  	for (int j = 0; j < NUM_ROWS; j++) {
-    	if (board[j][0].numTokens == minNumOfTokens) {
-      		count++;
-    	}
-  	}
-  	return count;
-}
-
 
 /*
  * Place tokens in the first column of the board
