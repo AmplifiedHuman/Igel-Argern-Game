@@ -64,7 +64,7 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
   	}
   	printLine();
   	//prints the number of the columns at the end of the board
-  	printf("     1   2   3   4   5   6   7   8   9\n");
+  	printf("     1   2   3   4   5   6   7   8   9\n\n");
 }
 
 void printLine() {
@@ -87,10 +87,11 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
   	for (int i = 0; i < 4; i++) {
     	for (int j = 0; j < numPlayers; j++) {
 
+			//reset valid input flag to false
       		isValidInput = false;
 
       		while (!isValidInput) {
-     			printf("Player %d, %s please select a square (1-6): ", j + 1, players[j].name);
+     			printf("\nPlayer %d, %s please select a square (1-6): ", j + 1, players[j].name);
         		fflush(stdout);
         		flag = scanf("%d", &selectedSquare);
         		selectedSquare--;
@@ -104,10 +105,10 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
         				board[selectedSquare][0].stack != NULL &&  
 						//checks if player color matches square colour
         				board[selectedSquare][0].stack->col == players[j].col) { 
-          			printf("Token can't be placed on the square with the same colour.\n");
+          			printf("Token can't be placed on top of your own token!");
         		} 
 				else if (board[selectedSquare][0].numTokens != minNumOfTokens) {
-          			printf("Token must be placed on the lowest stack.\n");
+          			printf("Token must be placed on the lowest stack.");
         		} 
 				else {
           			isValidInput = true; //if none  of these cases happen, input is valid
@@ -139,6 +140,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
  *        numPlayers - the number of players
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
+	srand(time(NULL));
   	int diceRoll;
   	for (int i  = 0; i < numPlayers; i++) {
     	print_board(board);
