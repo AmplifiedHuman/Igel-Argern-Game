@@ -6,7 +6,7 @@
 
 //function prototypes
 void printLine();
-bool noMinWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens, enum colour col);
+bool MinWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minNumOfTokens, enum colour col);
 bool checkWin(player players[], int numPlayers);
 void push(token **startPointer, enum colour col);
 void pop(token **startPointer);
@@ -104,7 +104,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 				else if (//board[selectedSquare][0].numTokens != minNumOfTokens && 
 						//checks if stack is null
         				board[selectedSquare][0].stack != NULL && 
-						noMinWithDiffColour(board, minNumOfTokens, players[j].col) &&
+						MinWithDiffColour(board, minNumOfTokens, players[j].col) &&
 						//checks if player color matches square colour
         				board[selectedSquare][0].stack->col == players[j].col) { 
           			printf("Token can't be placed on top of your own token!");
