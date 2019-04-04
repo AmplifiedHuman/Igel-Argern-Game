@@ -21,8 +21,6 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 
 bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row);
 bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
-bool sideMovePossible(square board[NUM_ROWS][NUM_COLUMNS], enum colour col);
-
 
 /*
  * Return true if a player has at least 3 tokens in last column, i.e.
