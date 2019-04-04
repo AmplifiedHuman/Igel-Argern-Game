@@ -157,144 +157,142 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 	int sideCol;
 	char upDown;
 
-	while (!checkWin(players, numPlayers)) {
-		for (int i  = 0; i < numPlayers; i++) {
-			//prints the board
-			print_board(board);
-			//roll dice: part A of game play
-			diceRoll = rand() % 6 + 1;
-			//intialise columnChoice
-			for (int j = 0; j < NUM_COLUMNS; j++) {
-				columnChoice[j] = 0;
+	for (int i  = 0; i < numPlayers && !checkWin(players, numPlayers); i++) {
+		//prints the board
+		print_board(board);
+		//roll dice: part A of game play
+		diceRoll = rand() % 6 + 1;
+		//intialise columnChoice
+		for (int j = 0; j < NUM_COLUMNS; j++) {
+			columnChoice[j] = 0;
+		}
+		//initialise sideChoice
+		for (int j = 0; j < NUM_ROWS; j++) {
+			for (int k = 0; k < NUM_COLUMNS; k++) {
+				sideChoice[j][k] = 0;
 			}
-			//initialise sideChoice
-			for (int j = 0; j < NUM_ROWS; j++) {
-				for (int k = 0; k < NUM_COLUMNS; k++) {
-					sideChoice[j][k] = 0;
-				}
-			}
-			//prints dice output for the current player.
-			printf("Player %d, %s, your dice roll is %d.\n", i + 1, players[i].name, diceRoll);
+		}
+		//prints dice output for the current player.
+		printf("Player %d, %s, your dice roll is %d.\n", i + 1, players[i].name, diceRoll);
 
-			//part B of gameplay: optional sideways move
+		//part B of gameplay: optional sideways move
+		do {
+			printf("1. Move a token sideways.\n");
+			printf("2. Pass sideways move.\n");
+			printf("Enter choice: ");
+			scanf("%d", &op);
+			// removes extra characters from buffer
+			while (getchar() != '\n');
+			printf("\n");
+		} while (op != 1 && op != 2);
+
+		if (op == 2) {
+			printf("Sideways move passed!\n");
+		}
+		else {
+			printf("Move a token sideways!");
+			printf("\nPossible squares: ");
+			for (int j = 0; j < NUM_ROWS; j++) {
+				for(int k = 0; k < NUM_COLUMNS - 1; k++) {
+					if (board[j][k].stack != NULL && //if the square is not empty
+						board[j][k].stack->col == players[i].col && //and the square colour matches player colour
+						(board[j][k].type == NORMAL || !blocked(board, j, k))) { //and the square is normal or not blocked
+							printf("\n(%d, %d)", j + 1, k + 1);
+							sideChoice[j][k] = 1;
+						}
+					}
+				}
 			do {
-				printf("1. Move a token sideways.\n");
-				printf("2. Pass sideways move.\n");
-				printf("Enter choice: ");
-				scanf("%d", &op);
+				printf("\nChoose row: ");
+				scanf("%d", &sideRow);
+				// removes extra characters from buffer
+				while (getchar() != '\n');
+				printf("Choose column: ");
+				scanf("%d", &sideCol);
 				// removes extra characters from buffer
 				while (getchar() != '\n');
 				printf("\n");
-			} while (op != 1 && op != 2);
+			} while (sideChoice[sideRow-1][sideCol-1] == 0);
 
-			if (op == 2) {
-				printf("Sideways move passed!\n");
-			}
-			else {
-				printf("Move a token sideways!");
-				printf("\nPossible squares: ");
-				for (int j = 0; j < NUM_ROWS; j++) {
-					for(int k = 0; k < NUM_COLUMNS - 1; k++) {
-						if (board[j][k].stack != NULL && //if the square is not empty
-							board[j][k].stack->col == players[i].col && //and the square colour matches player colour
-							(board[j][k].type == NORMAL || !blocked(board, j, k))) { //and the square is normal or not blocked
-								printf("\n(%d, %d)", j + 1, k + 1);
-								sideChoice[j][k] = 1;
-							}
-						}
-					}
+			if (sideRow != 1 && sideRow != NUM_ROWS) {
 				do {
-					printf("\nChoose row: ");
-					scanf("%d", &sideRow);
+					printf("Enter U to move up, D to move down: ");
+					scanf(" %c", &upDown);
 					// removes extra characters from buffer
 					while (getchar() != '\n');
-					printf("Choose column: ");
-					scanf("%d", &sideCol);
-					// removes extra characters from buffer
-					while (getchar() != '\n');
-					printf("\n");
-				} while (sideChoice[sideRow-1][sideCol-1] == 0);
-
-				if (sideRow != 1 && sideRow != NUM_ROWS) {
-					do {
-						printf("Enter U to move up, D to move down: ");
-						scanf(" %c", &upDown);
-						// removes extra characters from buffer
-						while (getchar() != '\n');
-					} while(upDown != 'U' && upDown != 'D' && upDown != 'u' && upDown != 'd');
-				}
-				else if (sideRow == 1) {
-					upDown = 'd';
-				}
-				else if (sideRow == NUM_ROWS) {
-					upDown = 'u';
-				}
-
-				if (upDown == 'D' || upDown == 'd') {
-					//push the token to the bottom square, increase the no of token on square
-					push(&board[sideRow][sideCol-1].stack, players[i].col);
-					board[sideRow][sideCol-1].numTokens++;
-					//remove the token at the current square and also decrement the no of token on square
-					pop(&board[sideRow-1][sideCol-1].stack);
-					board[sideRow-1][sideCol-1].numTokens--;
-					//prints the board again to show changes
-					print_board(board);
-					printf("Token moved down to square (%d, %d)!\n", sideRow + 1, sideCol);
-				}
-				else {
-					//push the token to the top square, increase the no of token on square
-					push(&board[sideRow-2][sideCol-1].stack, players[i].col);
-					board[sideRow-2][sideCol-1].numTokens++;
-					//remove the token at the current square and also decrement the no of token on square
-					pop(&board[sideRow-1][sideCol-1].stack);
-					board[sideRow-1][sideCol-1].numTokens--;
-					//prints the board again to show changes
-					print_board(board);
-					printf("Token moved up to square (%d, %d)!\n", sideRow - 1, sideCol);
-				}
+				} while(upDown != 'U' && upDown != 'D' && upDown != 'u' && upDown != 'd');
+			}
+			else if (sideRow == 1) {
+				upDown = 'd';
+			}
+			else if (sideRow == NUM_ROWS) {
+				upDown = 'u';
 			}
 
-			//part C of game play: move forward in diceRoll row
-
-			//checks if there are any moveable tokens in the current row
-			if (emptyRow(board, diceRoll - 1)) {
-				printf("There are no movable tokens in row %d!\n", diceRoll);
-			}
-			else {
-				//choose a token in row (diceRoll) to move forward
-				printf("\nMove a token forward in row %d.", diceRoll);
-				printf("\nColumns from which a token can move forward: ");
-				for (int j = 0; j < NUM_COLUMNS - 1; j++) {
-					if (board[diceRoll-1][j].stack != NULL &&
-						(board[diceRoll-1][j].type == NORMAL || !blocked(board, diceRoll-1, j))) {
-							printf("%d ", j + 1);
-							columnChoice[j] = 1;
-						}
-				}
-				do {
-					printf("\nChoose which token to move forward in row %d: ", diceRoll);
-					scanf("%d", &forwardChoice);
-					// removes extra characters from buffer
-					while (getchar() != '\n');
-				} while (columnChoice[forwardChoice-1] == 0);
-				//push the token to the front square, increase the no of token on square
-				push(&board[diceRoll-1][forwardChoice].stack, board[diceRoll-1][forwardChoice-1].stack->col);
-				board[diceRoll-1][forwardChoice].numTokens++;
-
-				//update counter if player adds a token to the last column
-				if (forwardChoice + 1 == NUM_COLUMNS) {
-					enum colour winnerColour = board[diceRoll-1][forwardChoice].stack->col;
-					players[(int) winnerColour].numTokensLastCol++;
-				}
-
-
+			if (upDown == 'D' || upDown == 'd') {
+				//push the token to the bottom square, increase the no of token on square
+				push(&board[sideRow][sideCol-1].stack, players[i].col);
+				board[sideRow][sideCol-1].numTokens++;
 				//remove the token at the current square and also decrement the no of token on square
-				pop(&board[diceRoll-1][forwardChoice-1].stack);
-				board[diceRoll-1][forwardChoice-1].numTokens--;
-
+				pop(&board[sideRow-1][sideCol-1].stack);
+				board[sideRow-1][sideCol-1].numTokens--;
+				//prints the board again to show changes
 				print_board(board);
-				printf("\nToken moved forward in row %d!\n", diceRoll);
+				printf("Token moved down to square (%d, %d)!\n", sideRow + 1, sideCol);
 			}
+			else {
+				//push the token to the top square, increase the no of token on square
+				push(&board[sideRow-2][sideCol-1].stack, players[i].col);
+				board[sideRow-2][sideCol-1].numTokens++;
+				//remove the token at the current square and also decrement the no of token on square
+				pop(&board[sideRow-1][sideCol-1].stack);
+				board[sideRow-1][sideCol-1].numTokens--;
+				//prints the board again to show changes
+				print_board(board);
+				printf("Token moved up to square (%d, %d)!\n", sideRow - 1, sideCol);
+			}
+		}
+
+		//part C of game play: move forward in diceRoll row
+
+		//checks if there are any moveable tokens in the current row
+		if (emptyRow(board, diceRoll - 1)) {
+			printf("There are no movable tokens in row %d!\n", diceRoll);
+		}
+		else {
+			//choose a token in row (diceRoll) to move forward
+			printf("\nMove a token forward in row %d.", diceRoll);
+			printf("\nColumns from which a token can move forward: ");
+			for (int j = 0; j < NUM_COLUMNS - 1; j++) {
+				if (board[diceRoll-1][j].stack != NULL &&
+					(board[diceRoll-1][j].type == NORMAL || !blocked(board, diceRoll-1, j))) {
+						printf("%d ", j + 1);
+						columnChoice[j] = 1;
+					}
+			}
+			do {
+				printf("\nChoose which token to move forward in row %d: ", diceRoll);
+				scanf("%d", &forwardChoice);
+				// removes extra characters from buffer
+				while (getchar() != '\n');
+			} while (columnChoice[forwardChoice-1] == 0);
+			//push the token to the front square, increase the no of token on square
+			push(&board[diceRoll-1][forwardChoice].stack, board[diceRoll-1][forwardChoice-1].stack->col);
+			board[diceRoll-1][forwardChoice].numTokens++;
+
+			//update counter if player adds a token to the last column
+			if (forwardChoice + 1 == NUM_COLUMNS) {
+				enum colour winnerColour = board[diceRoll-1][forwardChoice].stack->col;
+				players[(int) winnerColour].numTokensLastCol++;
+			}
+
+
+			//remove the token at the current square and also decrement the no of token on square
+			pop(&board[diceRoll-1][forwardChoice-1].stack);
+			board[diceRoll-1][forwardChoice-1].numTokens--;
+
+			print_board(board);
+			printf("\nToken moved forward in row %d!\n", diceRoll);
 		}
 	}
 }
