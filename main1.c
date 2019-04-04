@@ -4,7 +4,7 @@
  * main function to initialise board, players, place tokens and play game
  */
 int main(void) {
-  //seeding the random number generator
+  //seeding the random number generator, used in rolling a dice
    srand(time(NULL));
 
   //the board is defined as a 2-Dimensional array of squares
