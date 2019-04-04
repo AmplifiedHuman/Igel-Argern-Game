@@ -93,7 +93,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 				else if (minWithDiffColour(board, minTokens, players[j].col) &&
 						//checks if player color matches square colour
 						board[selectedSquare][0].stack->col == players[j].col &&
-						//checks if stack is null
+						//checks if stack is not null
         				board[selectedSquare][0].stack != NULL) { 
           			printf("Token can't be placed on top of your own token!");
         		} 
@@ -146,15 +146,165 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
  *        numPlayers - the number of players
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-	//seeding the random number generator
-	srand(time(NULL));
-
+	
   	int diceRoll;
-  	for (int i  = 0; i < numPlayers; i++) {
-    	print_board(board);
-    	diceRoll = rand() % 6 + 1;
-    	printf("Player %d, your dice roll is %d.\n", i + 1, diceRoll);
-  	}
+	int op;
+
+  	int sideChoice [NUM_ROWS][NUM_COLUMNS] = {0};
+	int forwardChoice;
+	int columnChoice[NUM_COLUMNS] = {0};
+
+	int sideRow;
+	int sideCol;
+	char upDown;
+
+	while (!checkWin(players, numPlayers)) {
+		for (int i  = 0; i < numPlayers; i++) {
+    		print_board(board);
+
+			//roll dice: part A of game play 
+    		diceRoll = rand() % 6 + 1;
+
+			for (int j = 0; j < NUM_COLUMNS; j++)
+				columnChoice[j] = 0;
+			
+			for (int j = 0; j < NUM_ROWS; j++)
+				for (int k = 0; k <NUM_COLUMNS; k++)
+					sideChoice[j][k] = 0;
+
+    		printf("Player %d, %s, your dice roll is %d.\n", i + 1, players[i].name, diceRoll);
+
+			//part B of gameplay: optional sideways move
+			do {
+				printf("1. Move a token sideways\n");
+				printf("2. Pass sideways move.\n");
+				printf("Enter choice: ");
+				scanf("%d", &op);	
+				printf("\n");
+			} while (op != 1 && op != 2);
+
+			if (op == 2) {
+				printf("Sideways move passed!\n");
+			}
+			else {
+				printf("Move a token sideways!");
+				printf("\nPossible squares: ");
+				for (int j = 0; j < NUM_ROWS; j++) {
+					for(int k = 0; k < NUM_COLUMNS; k++) {
+						if (board[j][k].stack != NULL &&
+							board[j][k].stack->col == players[i].col && 
+							(board[j][k].type == NORMAL || !blocked(board, j))) {
+							printf("\n(%d, %d)", j + 1, k + 1);
+							sideChoice[j][k] = 1;
+						}
+					}
+				}
+				do {
+					printf("\nChoose row: ");
+					scanf("%d", &sideRow);
+					printf("Choose column: ");
+					scanf("%d", &sideCol);
+					printf("\n");
+				} while (sideChoice[sideRow-1][sideCol-1] == 0);
+
+				if (sideRow != 1 && sideRow != NUM_ROWS) {
+					do {
+						printf("Enter U to move up, D to move down: ");
+						scanf(" %c", &upDown);
+					} while(upDown != 'U' && upDown != 'D' && upDown != 'u' && upDown != 'd');
+				}
+				else if (sideRow == 1)
+					upDown = 'd';
+				else if (sideRow == NUM_ROWS)
+					upDown = 'u';
+				
+
+				if (upDown == 'D' || upDown == 'd') {
+					push(&board[sideRow][sideCol-1].stack, players[i].col);
+					board[sideRow][sideCol-1].numTokens++;
+
+					pop(&board[sideRow-1][sideCol-1].stack);
+					board[sideRow-1][sideCol-1].numTokens--;
+
+					print_board(board);
+					printf("Token moved down to square (%d, %d)!\n", sideRow + 1, sideCol);
+				}
+				else {
+					push(&board[sideRow-2][sideCol-1].stack, players[i].col);
+					board[sideRow-2][sideCol-1].numTokens++;
+
+					pop(&board[sideRow-1][sideCol-1].stack);
+					board[sideRow-1][sideCol-1].numTokens--;
+
+					print_board(board);
+					printf("Token moved up to square (%d, %d)!\n", sideRow - 1, sideCol);
+				}
+			}
+
+			//part C of game play: move forward in diceRoll row
+
+			if (emptyRow(board, diceRoll-1)) {
+				printf("There are no movable tokens in row %d!\n", diceRoll);
+			}
+			else {
+				//choose a token in row (diceRoll) to move forward
+				printf("\nMove a token forward in row %d", diceRoll);
+				printf("\nColumns from which a token can move forward: ");
+				for (int j = 0; j < NUM_COLUMNS; j++) {
+					if (board[diceRoll-1][j].stack != NULL && 
+						(board[diceRoll-1][j].type == NORMAL || !blocked(board, diceRoll-1))) {
+						printf("%d ", j + 1);
+						columnChoice[j] = 1;
+					}
+				}
+				do {
+					printf("\nChoose which token to move forward in row %d: ", diceRoll);
+					scanf("%d", &forwardChoice);
+				} while (columnChoice[forwardChoice-1] == 0);
+
+				push(&board[diceRoll-1][forwardChoice].stack, board[diceRoll-1][forwardChoice-1].stack->col);
+      			board[diceRoll-1][forwardChoice].numTokens++;
+				
+				pop(&board[diceRoll-1][forwardChoice-1].stack);
+				board[diceRoll-1][forwardChoice-1].numTokens--;
+
+				print_board(board);
+				printf("\nToken moved forward in row %d!\n", diceRoll);
+			}
+  		}
+	}
+}
+
+//returns true if a row is empty or all tokens in row are in a deep pit
+bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row) {
+	for (int j = 0; j < NUM_COLUMNS; j++) {
+		if (board[row][j].stack != NULL && !blocked(board, row))
+			return false;
+	}
+	return true;
+}
+
+//returns true if all tokens if tokens in a row are blocked
+bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row) {
+	//return false if there are any non-empty normal squares (except last column)
+	for (int j = 0; j < NUM_COLUMNS - 1; j++) {
+		if (board[row][j].type == NORMAL && board[row][j].stack != NULL)
+			return false;
+	}
+
+	for (int j = 0; j < NUM_COLUMNS - 1; j++) {
+		if (board[row][j].type == OBSTACLE && board[row][j].stack != NULL) {
+			//checking squares in all rows and columns behind obstacle
+			for (int k = 0; k < NUM_ROWS; k++) {
+				for (int m = 0; m < j; m++) {
+					//return true if there is non-empty square behind obstacle
+					if (board[k][m].stack != NULL)
+						return true;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 /* 
@@ -169,6 +319,8 @@ bool checkWin(player players[], int numPlayers) {
   	for (int i = 0; i < numPlayers; i++) {
 		//check if we have a winner
     	if (players[i].numTokensLastCol >= 3) {
+			printf("\nCONGRATULATIONS!");
+			printf("\nPlayer %d, %s has won the game!\n", i + 1, players[i].name);
       		return true;
     	}
   	}

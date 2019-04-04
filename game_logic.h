@@ -19,6 +19,9 @@ void printLine();
  */
 bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col);
 
+bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row);
+bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row);
+
 
 /* 
  * Return true if a player has at least 3 tokens in last column, i.e.
