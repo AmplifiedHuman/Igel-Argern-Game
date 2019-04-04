@@ -158,7 +158,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 	char upDown;
 
 	while (!checkWin(players, numPlayers)) {
-		for (int i  = 0; i < numPlayers; i++) {
+		for (int i  = 0; i < numPlayers && !checkWin(players, numPlayers); i++) {
 			//prints the board
 			print_board(board);
 			//roll dice: part A of game play
