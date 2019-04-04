@@ -190,7 +190,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 			if (op == 2) {
 				printf("Sideways move passed!\n");
 			}
-			else if (op == 1 && sideMovePossible(board, players[i].col)){
+			else {
 				printf("Move a token sideways!");
 				printf("\nPossible squares: ");
 				for (int j = 0; j < NUM_ROWS; j++) {
@@ -283,8 +283,10 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 
 				//update counter if player adds a token to the last column
 				if (forwardChoice + 1 == NUM_COLUMNS) {
-					players[i].numTokensLastCol++;
+					enum color winnerColor = board[diceRoll-1][forwardChoice].stack->col;
+					players[(int) winnerColor].numTokensLastCol++;
 				}
+
 
 				//remove the token at the current square and also decrement the no of token on square
 				pop(&board[diceRoll-1][forwardChoice-1].stack);
@@ -329,17 +331,6 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 					return true;
 				}
 			}
-		}
-	}
-	return false;
-}
-
-bool sideMovePossible(square board[NUM_ROWS][NUM_COLUMNS], enum colour col) {
-	for (int i = 0; i < NUM_ROWS; i++) {
-		for (int j = 0; j < NUM_COLUMNS - 1; j++) {
-			if (board[i][j].type == NORMAL && board[i][j].stack != NULL && 
-				board[i][j].stack->col == col)
-				return true;
 		}
 	}
 	return false;
