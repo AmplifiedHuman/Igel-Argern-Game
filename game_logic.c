@@ -133,11 +133,11 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
  */
 bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col) {
 	for (int i = 0; i < NUM_ROWS; i++) {
-		if (board[i][0].stack != NULL && board[i][0].numTokens == minTokens 
-				&& board[i][0].stack->col != col)
-			return false;
-	}
-	return true;
+			if (board[i][0].stack != NULL && board[i][0].numTokens == minTokens 
+					&& board[i][0].stack->col != col)
+				return true;
+		}
+	return false;
 }
 
 /*
