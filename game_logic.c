@@ -178,7 +178,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 
 			//part B of gameplay: optional sideways move
 			do {
-				printf("1. Move a token sideways\n");
+				printf("1. Move a token sideways.\n");
 				printf("2. Pass sideways move.\n");
 				printf("Enter choice: ");
 				scanf("%d", &op);
@@ -262,7 +262,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 			}
 			else {
 				//choose a token in row (diceRoll) to move forward
-				printf("\nMove a token forward in row %d", diceRoll);
+				printf("\nMove a token forward in row %d.", diceRoll);
 				printf("\nColumns from which a token can move forward: ");
 				for (int j = 0; j < NUM_COLUMNS - 1; j++) {
 					if (board[diceRoll-1][j].stack != NULL &&
@@ -284,6 +284,12 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				//update counter if player adds a token to the last column
 				if (forwardChoice + 1 == NUM_COLUMNS)
 					players[i].numTokensLastCol++;
+				
+				if (checkWin(players, numPlayers)) {
+					printf("\nCONGRATULATIONS!");
+					printf("\nPlayer %d, %s has won the game!\n", i + 1, players[i].name);
+					return;
+				}
 
 				//remove the token at the current square and also decrement the no of token on square
 				pop(&board[diceRoll-1][forwardChoice-1].stack);
@@ -328,11 +334,6 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 					return true;
 				}
 			}
-		}
-		//return false if there are any non-empty normal squares (except last column)
-		for (int k = column + 1; k < NUM_COLUMNS - 1; k++) {
-			if (board[row][k].type == NORMAL && board[row][k].stack != NULL)
-				return false;
 		}
 	}
 	return false;
