@@ -264,7 +264,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				//choose a token in row (diceRoll) to move forward
 				printf("\nMove a token forward in row %d", diceRoll);
 				printf("\nColumns from which a token can move forward: ");
-				for (int j = 0; j < NUM_COLUMNS; j++) {
+				for (int j = 0; j < NUM_COLUMNS - 1; j++) {
 					if (board[diceRoll-1][j].stack != NULL &&
 						(board[diceRoll-1][j].type == NORMAL || !blocked(board, diceRoll-1, j))) {
 							printf("%d ", j + 1);
@@ -280,6 +280,11 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				//push the token to the front square, increase the no of token on square
 				push(&board[diceRoll-1][forwardChoice].stack, board[diceRoll-1][forwardChoice-1].stack->col);
 				board[diceRoll-1][forwardChoice].numTokens++;
+
+				//update counter if player adds a token to the last column
+				if (forwardChoice + 1 == NUM_COLUMNS)
+					players[i].numTokensLastCol++;
+
 				//remove the token at the current square and also decrement the no of token on square
 				pop(&board[diceRoll-1][forwardChoice-1].stack);
 				board[diceRoll-1][forwardChoice-1].numTokens--;
