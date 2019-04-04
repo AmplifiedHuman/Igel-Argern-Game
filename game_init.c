@@ -33,7 +33,7 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
  */
 int initialise_players(player players[]) {
     //number of players
-    int numPlayers = 0; 
+    int numPlayers = 0;
     //names of token colours
     char *colours[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
 
