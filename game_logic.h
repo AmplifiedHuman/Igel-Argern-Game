@@ -21,6 +21,7 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 
 bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row);
 bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
+bool sideMovePossible(square board[NUM_ROWS][NUM_COLUMNS]);
 
 
 /* 
