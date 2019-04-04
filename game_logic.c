@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
 #include "game_logic.h"
 /*
 * Returns the first letter associated with the color of the token
@@ -169,6 +165,7 @@ int totalMinSquares(square board[NUM_ROWS][NUM_COLUMNS], int minTokens) {
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
 	//seeding the random number generator
 	srand(time(NULL));
+
   	int diceRoll;
   	for (int i  = 0; i < numPlayers; i++) {
     	print_board(board);
@@ -198,7 +195,7 @@ bool checkWin(player players[], int numPlayers) {
 /*
  * Place a token on the stack
  * 
- * Input: top - pointer to topmost token on stack
+ * Input: top - pointer to topmost token pointer on stack
  */
 void push(token **top, enum colour col) {
 	//allocate memory to temporary pointer
@@ -214,7 +211,7 @@ void push(token **top, enum colour col) {
 /*
  * Remove a token from the stack
  * 
- * Input: top - pointer to topmost token on stack
+ * Input: top - pointer to topmost token pointer on stack
  */
 void pop(token **top) {
 	//if the stack is empty, then exit

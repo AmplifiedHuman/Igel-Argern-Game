@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
 #include "game_init.h"
 
 /*
@@ -38,7 +42,7 @@ bool checkWin(player players[], int numPlayers);
 /*
  * Place a token on the stack
  * 
- * Input: top - pointer to topmost token on stack
+ * Input: top - pointer to topmost token pointer on stack
  */
 void push(token **top, enum colour col);
 
@@ -46,7 +50,7 @@ void push(token **top, enum colour col);
 /*
  * Remove a token from the stack
  * 
- * Input: top - pointer to topmost token on stack
+ * Input: top - pointer to topmost token pointer on stack
  */
 void pop(token **top);
 
