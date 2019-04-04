@@ -312,27 +312,24 @@ bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row) {
 * Input: the board and the current row
 */
 bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
-	for (int j = 0; j < NUM_COLUMNS - 1; j++) {
-		// if any obstacle square in that row is not empty then
-		if (board[row][j].type == OBSTACLE && board[row][j].stack != NULL && j == column) {
-			// checking squares in all rows and columns behind obstacle
-			for (int k = 0; k < NUM_ROWS; k++) {
-				// only check columns before the obstacle square
-				for (int m = 0; m < j; m++) {
-					// return true if there is at least one non-empty square behind obstacle
-					if (board[k][m].stack != NULL) {
-						return true;
-					}
+	// if any obstacle square in that row is not empty then
+	if (board[row][column].type == OBSTACLE && board[row][column].stack != NULL) {
+		// checking squares in all rows and columns behind obstacle
+		for (int k = 0; k < NUM_ROWS; k++) {
+			// only check columns before the obstacle square
+			for (int m = 0; m < column; m++) {
+				// return true if there is at least one non-empty square behind obstacle
+				if (board[k][m].stack != NULL) {
+					return true;
 				}
 			}
-			//return false if there are any non-empty normal squares (except last column)
-			for (int k = j+1; j < NUM_COLUMNS - 1; j++) {
-				if (board[row][k].type == NORMAL && board[row][k].stack != NULL)
-					return false;
-			}
+		}
+		//return false if there are any non-empty normal squares (except last column)
+		for (int k = column + 1; k < NUM_COLUMNS - 1; k++) {
+			if (board[row][k].type == NORMAL && board[row][k].stack != NULL)
+				return false;
 		}
 	}
-
 	return false;
 }
 
