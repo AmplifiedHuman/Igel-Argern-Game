@@ -155,10 +155,11 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 
 	int sideRow;
 	int sideCol;
+	int winner = -1;
 	char upDown;
 
-	while (!checkWin(players, numPlayers)) {
-		for (int i = 0; i < numPlayers && !checkWin(players, numPlayers); i++) {
+	while (!checkWin(players, numPlayers, &winner)) {
+		for (int i = 0; i < numPlayers && !checkWin(players, numPlayers, &winner); i++) {
 			//prints the board
 			print_board(board);
 			//roll dice: part A of game play
@@ -297,6 +298,8 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 			}
 		}
 	}
+	printf("\nCONGRATULATIONS!");
+	printf("\nPlayer %d, %s has won the game!\n", winner + 1, players[winner].name);
 }
 
 /*
@@ -343,13 +346,12 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 * Input: players - the array of players
 *        numPlayers - the number of players
 */
-bool checkWin(player players[], int numPlayers) {
+bool checkWin(player players[], int numPlayers, int* winner) {
 	//iterate through all the players
 	for (int i = 0; i < numPlayers; i++) {
 		//check if we have a winner, which means there are at least 3 tokens at the last column
 		if (players[i].numTokensLastCol >= 3) {
-			printf("\nCONGRATULATIONS!");
-			printf("\nPlayer %d, %s has won the game!\n", i + 1, players[i].name);
+			*winner = i;
 			return true;
 		}
 	}

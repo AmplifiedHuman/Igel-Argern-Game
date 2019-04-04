@@ -10,11 +10,11 @@
 void printLine();
 
 /*
- * Returns true if there is a square with minimum number of tokens whose colour is 
+ * Returns true if there is a square with minimum number of tokens whose colour is
  * not the same as the player's colour.
- * 
+ *
  * Input: board - a 6x9 array of squares that represents the board
- * 		  minTokens - number of tokens in lowest stack 
+ * 		  minTokens - number of tokens in lowest stack
  * 		  col - player's chosen colour
  */
 bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col);
@@ -24,19 +24,19 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
 bool sideMovePossible(square board[NUM_ROWS][NUM_COLUMNS], enum colour col);
 
 
-/* 
+/*
  * Return true if a player has at least 3 tokens in last column, i.e.
  * the game has been won
- * 
+ *
  * Input: players - the array of players
  *        numPlayers - the number of players
  */
-bool checkWin(player players[], int numPlayers);
+bool checkWin(player players[], int numPlayers, int *winner);
 
 
 /*
  * Place a token on the stack
- * 
+ *
  * Input: top - pointer to topmost token pointer on stack
  */
 void push(token **top, enum colour col);
@@ -44,7 +44,7 @@ void push(token **top, enum colour col);
 
 /*
  * Remove a token from the stack
- * 
+ *
  * Input: top - pointer to topmost token pointer on stack
  */
 void pop(token **top);
