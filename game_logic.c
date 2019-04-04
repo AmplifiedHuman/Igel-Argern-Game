@@ -277,10 +277,10 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 					// removes extra characters from buffer
 					while (getchar() != '\n');
 				} while (columnChoice[forwardChoice-1] == 0);
-				//push the token to the top square, increase the no of token on square
+				//push the token to the front square, increase the no of token on square
 				push(&board[diceRoll-1][forwardChoice].stack, board[diceRoll-1][forwardChoice-1].stack->col);
 				board[diceRoll-1][forwardChoice].numTokens++;
-
+				//remove the token at the current square and also decrement the no of token on square
 				pop(&board[diceRoll-1][forwardChoice-1].stack);
 				board[diceRoll-1][forwardChoice-1].numTokens--;
 
