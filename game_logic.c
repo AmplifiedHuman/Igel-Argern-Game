@@ -18,7 +18,7 @@ char print_token(token *t) {
 /*
  * Prints the board
  *
- * Input: the board to be printed.
+ * Input: board - a 6x9 array of squares that represents the board
  */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
   	printf("\n                THE BOARD\n");
@@ -68,7 +68,7 @@ void printLine() {
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
 	int minTokens = 0; //number of tokens in lowest stack 
-  	int selectedSquare = 0;
+  	int selectedSquare; //row number in first column, square selected by player
   	bool isValidInput = false; //boolean to check for valid input
   	int flag = 0; //indicate if scanf has received valid input
 
@@ -78,12 +78,14 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 			//reset valid input flag to false
       		isValidInput = false;
 
+			//loop as long as selected square is invalid
       		while (!isValidInput) {
      			printf("\nPlayer %d, %s please select a square (1-6): ", j + 1, players[j].name);
         		fflush(stdout);
         		flag = scanf("%d", &selectedSquare);
-        		selectedSquare--;
+        		selectedSquare--; //change row number to row index
 
+				//conditions where input is invalid
         		if (flag != 1 || selectedSquare < 0 || selectedSquare > 5) {
           			printf("Input must be in range (1 - 6).");
         		} 
@@ -107,12 +109,12 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
         		while (getchar() != '\n'); //removes invalid input from buffer
         		puts("");
      		}
-
+			
+			//when input is validated, place token on selected square
       		push(&board[selectedSquare][0].stack, players[j].col);
       		board[selectedSquare][0].numTokens++;
 
-      		//need some time to understand, write formula on paper, very smart
-      		//basically find the min number of tokens at each iteration/round
+      		//find the minimum number of tokens at each iteration/round
       		if (((numPlayers * i) + j + 1) % NUM_ROWS == 0) {
         		minTokens++;
       		}
@@ -126,11 +128,11 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
  * not the same as the player's colour.
  * 
  * Input: board - a 6x9 array of squares that represents the board
- * minTokens - number of tokens in lowest stack 
- * col - player's chosen colour
+ * 		  minTokens - number of tokens in lowest stack 
+ *        col - player's chosen colour
  */
 bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col) {
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < NUM_ROWS; i++) {
 		if (board[i][0].stack != NULL && board[i][0].numTokens == minTokens 
 				&& board[i][0].stack->col != col)
 			return false;

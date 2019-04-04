@@ -58,7 +58,7 @@ void pop(token **top);
 /*
  * Prints the board
  *
- * Input: the board to be printed.
+ * Input: board - a 6x9 array of squares that represents the board
  */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]);
 
