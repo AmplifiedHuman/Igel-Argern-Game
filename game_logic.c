@@ -194,7 +194,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				printf("Move a token sideways!");
 				printf("\nPossible squares: ");
 				for (int j = 0; j < NUM_ROWS; j++) {
-					for(int k = 0; k < NUM_COLUMNS; k++) {
+					for(int k = 0; k < NUM_COLUMNS - 1; k++) {
 						if (board[j][k].stack != NULL && //if the square is not empty
 							board[j][k].stack->col == players[i].col && //and the square colour matches player colour
 							(board[j][k].type == NORMAL || !blocked(board, j, k))) { //and the square is normal or not blocked
