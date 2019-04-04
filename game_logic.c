@@ -197,7 +197,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 					for(int k = 0; k < NUM_COLUMNS; k++) {
 						if (board[j][k].stack != NULL && //if the square is not empty
 							board[j][k].stack->col == players[i].col && //and the square colour matches player colour
-							(board[j][k].type == NORMAL || !blocked(board, j))) { //and the square is normal or not blocked
+							(board[j][k].type == NORMAL || !blocked(board, j, k))) { //and the square is normal or not blocked
 								printf("\n(%d, %d)", j + 1, k + 1);
 								sideChoice[j][k] = 1;
 							}
@@ -266,7 +266,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				printf("\nColumns from which a token can move forward: ");
 				for (int j = 0; j < NUM_COLUMNS; j++) {
 					if (board[diceRoll-1][j].stack != NULL &&
-						(board[diceRoll-1][j].type == NORMAL || !blocked(board, diceRoll-1))) {
+						(board[diceRoll-1][j].type == NORMAL || !blocked(board, diceRoll-1, j))) {
 							printf("%d ", j + 1);
 							columnChoice[j] = 1;
 						}
@@ -297,9 +297,9 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 * Input: the board and the current row
 */
 bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row) {
-	for (int j = 0; j < NUM_COLUMNS; j++) {
+	for (int j = 0; j < NUM_COLUMNS - 1; j++) {
 		// if any square in that row is not empty and the row is not blocked return false
-		if (board[row][j].stack != NULL && !blocked(board, row)) {
+		if (board[row][j].stack != NULL && !blocked(board, row, j)) {
 			return false;
 		}
 	}
@@ -311,18 +311,10 @@ bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row) {
 * return false if there are any non-empty normal squares (except last column)
 * Input: the board and the current row
 */
-bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row) {
-	// Ignore the last column
-	for (int j = 0; j < NUM_COLUMNS - 1; j++) {
-		// if any normal square in that row is not empty return false
-		if (board[row][j].type == NORMAL && board[row][j].stack != NULL) {
-			return false;
-		}
-	}
-
+bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 	for (int j = 0; j < NUM_COLUMNS - 1; j++) {
 		// if any obstacle square in that row is not empty then
-		if (board[row][j].type == OBSTACLE && board[row][j].stack != NULL) {
+		if (board[row][j].type == OBSTACLE && board[row][j].stack != NULL && j == column) {
 			// checking squares in all rows and columns behind obstacle
 			for (int k = 0; k < NUM_ROWS; k++) {
 				// only check columns before the obstacle square
@@ -332,6 +324,11 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row) {
 						return true;
 					}
 				}
+			}
+			//return false if there are any non-empty normal squares (except last column)
+			for (int k = j+1; j < NUM_COLUMNS - 1; j++) {
+				if (board[row][k].type == NORMAL && board[row][k].stack != NULL)
+					return false;
 			}
 		}
 	}
