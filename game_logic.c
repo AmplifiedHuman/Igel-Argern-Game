@@ -90,13 +90,11 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
           			printf("Input must be in range (1 - 6).");
         		} 
 					    //checks if there is a lowest stack with a different colour
-				else if ((minWithDiffColour(board, minTokens, players[j].col) ||
-						//checks if there is only 1 free spot
-						totalMinSquares(board, minTokens) != 1) &&
-						//checks if stack is null
-        				board[selectedSquare][0].stack != NULL && 
+				else if (minWithDiffColour(board, minTokens, players[j].col) &&
 						//checks if player color matches square colour
-        				board[selectedSquare][0].stack->col == players[j].col) { 
+						board[selectedSquare][0].stack->col == players[j].col &&
+						//checks if stack is null
+        				board[selectedSquare][0].stack != NULL) { 
           			printf("Token can't be placed on top of your own token!");
         		} 
 				else if (board[selectedSquare][0].numTokens != minTokens) {
@@ -136,25 +134,8 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 			if (board[i][0].stack != NULL && board[i][0].numTokens == minTokens 
 					&& board[i][0].stack->col != col)
 				return true;
-		}
+	}
 	return false;
-}
-
-/*
- * Checks how many rows have minimum tokens
- * 
- * Input: board - a 6x9 array of squares that represents the board
- * 		  minTokens - number of tokens in lowest stack 
- * Output: number of rows with minimum tokens
- */
-int totalMinSquares(square board[NUM_ROWS][NUM_COLUMNS], int minTokens) {
-  	int count = 0;
-  	for (int j = 0; j < NUM_ROWS; j++) {
-    	if (board[j][0].numTokens == minTokens) {
-      		count++;
-    	}
-  	}
-  	return count;
 }
 
 /*

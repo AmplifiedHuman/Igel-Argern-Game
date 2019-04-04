@@ -19,15 +19,6 @@ void printLine();
  */
 bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col);
 
-/*
- * Checks how many rows have minimum tokens
- * 
- * Input: board - a 6x9 array of squares that represents the board
- * 		  minTokens - number of tokens in lowest stack 
- * Output: number of rows with minimum tokens
- */
-int totalMinSquares(square board[NUM_ROWS][NUM_COLUMNS], int minTokens);
-
 
 /* 
  * Return true if a player has at least 3 tokens in last column, i.e.
