@@ -190,7 +190,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 			if (op == 2) {
 				printf("Sideways move passed!\n");
 			}
-			else if (op == 1 && sideMovePossible(board)){
+			else if (op == 1 && sideMovePossible(board, players[i].col)){
 				printf("Move a token sideways!");
 				printf("\nPossible squares: ");
 				for (int j = 0; j < NUM_ROWS; j++) {
@@ -334,10 +334,11 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 	return false;
 }
 
-bool sideMovePossible(square board[NUM_ROWS][NUM_COLUMNS]) {
+bool sideMovePossible(square board[NUM_ROWS][NUM_COLUMNS], enum colour col) {
 	for (int i = 0; i < NUM_ROWS; i++) {
 		for (int j = 0; j < NUM_COLUMNS - 1; j++) {
-			if (board[i][j].type == NORMAL && board[i][j].stack != NULL)
+			if (board[i][j].type == NORMAL && board[i][j].stack != NULL && 
+				board[i][j].stack->col == col)
 				return true;
 		}
 	}
