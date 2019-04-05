@@ -1,14 +1,14 @@
-#include "game_init.h"
 #include <stdio.h>
-
-
+#include "game_init.h"
 /*
  * This function creates the board for the first time
  *
  * Input: board - a 6x9 array of squares
  */
 void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
-   for (int i = 0; i< NUM_ROWS; i++) {
+
+    //iterate through all the rows and columns of the board
+    for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_COLUMNS; j++) {
             //creates an obstacle square at positions (0,3), (1,6), (2,4), (3,5), (4,2) and (5,7)
             if ((i == 0 && j == 3) || (i == 1 && j == 6) || (i ==2 && j == 4)
@@ -27,19 +27,20 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
 }
 
 
- /*
+/*
  * This function creates players for the first time
  *
  * Input: the array of players to be initialised
  * Output: The number of players of the game
  */
 int initialise_players(player players[]) {
-    //number of players
-    int numPlayers = 0; 
-    //names of token colours
-    char *tokenCol[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
 
-    printf("Welcome to the game!\n");
+    //number of players
+    int numPlayers = 0;
+    //names of token colours
+    char *colours[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
+
+    printf("Welcome to game, Igel Argern!\n");
     printf("Please enter the number of players to continue (2-6): ");
     fflush(stdout);
 
@@ -49,12 +50,14 @@ int initialise_players(player players[]) {
     }
 
     for (int i = 0; i < numPlayers; i++) {
-        printf("Please enter the name of player #%d: ", i + 1);
+        printf("\nPlease enter the name of player #%d: ", i + 1);
         scanf("%69s", players[i].name);
 
+        //assign colour to current player
         players[i].col = (enum colour) i;
+        //initialise the player's tokens in the last column to 0
         players[i].numTokensLastCol = 0;
-        printf("Token colour: %s\n", tokenCol[players[i].col]);
+        printf("Your token colour is %s!\n", colours[players[i].col]);
     }
 
     return numPlayers;
