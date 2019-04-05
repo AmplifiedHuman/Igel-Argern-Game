@@ -122,7 +122,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 }
 
 /*
-* Returns true if there is a square with minimum number of tokens 
+* Returns true if there is a square with minimum number of tokens
 * whose colour is not the same as the player's colour.
 *
 * Input:     board - a 6x9 array of squares that represents the board
@@ -149,7 +149,7 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 	*/
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
 
-	
+
 	int diceRoll; //The output of the dice roll
 	int op; //option to perform sideways move, 1 to move/2 to pass
 	int winner = -1; //stores index of winning player in players array
@@ -165,7 +165,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 	int sideRow; //stores the row number of chosen square for sideways move
 	int sideCol; //stores the column number of chosen square for sideways move
 	char upDown; //stores user choice to move up or down in a sideways move
-	
+
 
 	while (!checkWin(players, numPlayers, &winner)) {
 		for (int i = 0; i < numPlayers && !checkWin(players, numPlayers, &winner); i++) {
@@ -212,12 +212,12 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				for (int j = 0; j < NUM_ROWS; j++) {
 					for(int k = 0; k < NUM_COLUMNS - 1; k++) {
 						//if the square is not empty
-						if (board[j][k].stack != NULL && 
+						if (board[j][k].stack != NULL &&
 						//and the square colour matches player colour
-						board[j][k].stack->col == players[i].col && 
+						board[j][k].stack->col == players[i].col &&
 						//and the square is normal or not blocked
-						(board[j][k].type == NORMAL || !blocked(board, j, k))) { 
-								
+						(board[j][k].type == NORMAL || !blocked(board, j, k))) {
+
 							printf("\n(%d, %d)", j + 1, k + 1);
 							//place 1 in square choices where a sideways move is possible
 							sideChoice[j][k] = 1;
@@ -295,7 +295,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 						print_board(board);
 						printf("Token moved up to square (%d, %d)!\n", sideRow - 1, sideCol);
 					}
-				}				
+				}
 			}
 
 			//part C of game play: move forward in diceRoll row
@@ -350,8 +350,10 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 		}
 	}
 	//end game if a winner is identified
-	printf("\nCONGRATULATIONS!");
-	printf("\nPlayer %d, %s has won the game!\n", winner + 1, players[winner].name);
+	if (winner != -1) {
+		printf("\nCONGRATULATIONS!");
+		printf("\nPlayer %d, %s has won the game!\n", winner + 1, players[winner].name);
+	}
 }
 
 /*
