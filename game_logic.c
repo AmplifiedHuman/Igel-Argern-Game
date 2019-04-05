@@ -403,8 +403,9 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 bool checkWin(player players[], int numPlayers, int *winner) {
 	//iterate through all the players
 	for (int i = 0; i < numPlayers; i++) {
-		//check if we have a winner, which means there are at least 3 tokens at the last column
+		//check if we have a winner, which means there are at least 3 tokens it the last column
 		if (players[i].numTokensLastCol >= 3) {
+			//point winner to the player index i
 			*winner = i;
 			return true;
 		}
