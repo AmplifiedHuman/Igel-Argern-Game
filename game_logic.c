@@ -372,10 +372,13 @@ bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row) {
 }
 
 /*
-* returns true if all tokens in a row are blocked
-* return false if there are any non-empty normal squares (except last column)
-* Input: the board and the current row
-*/
+ * Returns true if the square in selected row and column is blocked
+ * and no token can be moved from it
+ *
+ * Input: board - a 6x9 array of squares that represents the board
+ *          row - the row index of the square being checked
+ *       column - the column index of the square being checked
+ */
 bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 	// if any obstacle square in that row is not empty then
 	if (board[row][column].type == OBSTACLE && board[row][column].stack != NULL) {
@@ -422,6 +425,11 @@ bool checkWin(player players[], int numPlayers, int *winner) {
 void push(token **top, enum colour col) {
 	//allocate memory to temporary pointer
 	token *temp = malloc(sizeof(token));
+	//checks if memory is allocated
+	if (temp == NULL) {
+		printf("Cannot allocate memory.\n");
+		exit(0);
+	}
 	//assign player's token colour to temporary pointer
 	temp->col = col;
 	//let the temporary pointer point to the top pointer
