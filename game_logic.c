@@ -40,11 +40,13 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
 			//if the square (i,j) is empty
 			else {
 				//c is assigned 'X' if the square represents an obstacle
-				if (board[i][j].type == OBSTACLE)
-				c = 'X';
+				if (board[i][j].type == OBSTACLE) {
+					c = 'X';
+				}
 				//c is assigned an empty space otherwise
-				else
-				c = ' ';
+				else {
+					c = ' ';
+				}
 			}
 			printf("| %c ", c);
 		}
