@@ -39,6 +39,8 @@ int initialise_players(player players[]) {
     int numPlayers = 0;
     //names of token colours
     char *colours[6] = {"RED", "BLUE", "GREEN", "YELLOW", "PINK", "ORANGE"};
+    int flag[6] = {0}; //array to store which colours have already been chosen
+    int choice = 0; //stores user's token colour choice
 
     printf("Welcome to game, Igel Argern!\n");
     printf("Please enter the number of players to continue (2-6): ");
@@ -52,13 +54,27 @@ int initialise_players(player players[]) {
     for (int i = 0; i < numPlayers; i++) {
         printf("\nPlease enter the name of player #%d: ", i + 1);
         scanf("%69s", players[i].name);
+        choice = 0;
 
+        printf("\nAvailable token colours:\n");
+        for (int j = 0; j < 6; j++)
+            if (flag[j] == 0) //if colour is available
+                printf("Colour %d: %s\n", j+1, colours[j]); //display available colours
+        printf("Please choose one of the above colours: ");
+        fflush(stdout);
+
+        while (scanf("%d", &choice) != 1 || choice < 1 || choice > 6 || flag[choice - 1] == 1) { //validation check
+            printf("Please choose one of the above colours: ");
+            while(getchar() != '\n'); //removes inavlid input from buffer
+        } 
+        //from colour options, remove colour that has already been chosen
+        flag[choice - 1] = 1;
+        
         //assign colour to current player
-        players[i].col = (enum colour) i;
+        players[i].col = (enum colour) (choice - 1);
         //initialise the player's tokens in the last column to 0
         players[i].numTokensLastCol = 0;
-        printf("Your token colour is %s!\n", colours[players[i].col]);
+        printf("Your token colour is %s!\n", colours[choice - 1]);  
     }
-
     return numPlayers;
 }
