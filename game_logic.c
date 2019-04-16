@@ -361,7 +361,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 }
 
 /*
- * Returns true if a row is empty or all tokens in row are in a deep pit
+ * Returns true if a row is empty or all tokens in row are in a deep pit (obstacle)
  *
  * Input: the board and the current row
  */
