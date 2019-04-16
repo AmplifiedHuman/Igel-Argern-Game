@@ -5,7 +5,7 @@
  */
 int main(void) {
   //seeding the random number generator, used in rolling a dice
-   srand(time(NULL));
+  srand(time(NULL));
 
   //the board is defined as a 2-Dimensional array of squares
   square board[NUM_ROWS][NUM_COLUMNS];

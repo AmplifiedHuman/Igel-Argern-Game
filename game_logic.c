@@ -136,8 +136,9 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 	for (int i = 0; i < NUM_ROWS; i++) {
 		//return true if there is a non-empty, lowest stack of a different colour than player's colour
 		if (board[i][0].stack != NULL && board[i][0].numTokens == minTokens
-			&& board[i][0].stack->col != col)
-			return true;
+			&& board[i][0].stack->col != col) {
+				return true;
+			}
 		}
 		return false;
 }
@@ -231,8 +232,9 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				}
 
 				//sideways move is not possible
-				if (possibleSide == 0)
+				if (possibleSide == 0) {
 					printf("None!\n");
+				}
 				//sideways move is possible
 				else {
 					//loop until a square is chosen from which a sideways move is possible

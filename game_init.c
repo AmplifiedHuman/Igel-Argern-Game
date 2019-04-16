@@ -59,7 +59,7 @@ int initialise_players(player players[]) {
         printf("\nPlease enter the name of player #%d: ", i + 1);
         fgets(players[i].name, 70, stdin); //get player's name with spaces
         if (strlen(players[i].name) != 69) { //check if the string is full (no newline char)
-          players[i].name[strlen(players[i].name) - 1] = '\0'; //remove newline character from name
+            players[i].name[strlen(players[i].name) - 1] = '\0'; //remove newline character from name
         }
 
         choice = 0;
