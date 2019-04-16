@@ -26,9 +26,9 @@ typedef struct square {
 	int numTokens;
 } square;
 
-//defines a player 
+//defines a player
 typedef struct player {
-	char name [70];
+	char name[70];
 	//each player has tokens of a particular colour
 	enum colour col;
 	//stores how many tokens the player has in the last column of the board
