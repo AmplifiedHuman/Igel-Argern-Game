@@ -138,9 +138,9 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 		if (board[i][0].stack != NULL && board[i][0].numTokens == minTokens
 			&& board[i][0].stack->col != col) {
 				return true;
-			}
 		}
-		return false;
+	}
+	return false;
 }
 
 	/*
