@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "game_init.h"
 /*
  * This function creates the board for the first time
@@ -53,10 +54,15 @@ int initialise_players(player players[]) {
     }
 
     for (int i = 0; i < numPlayers; i++) {
-        printf("\nPlease enter the name of player #%d: ", i + 1);
-        scanf("%69s", players[i].name);
-        choice = 0;
 
+        getchar(); //gets rid of newline character
+        printf("\nPlease enter the name of player #%d: ", i + 1);
+        fgets(players[i].name, 70, stdin); //get player's name with spaces
+        if (strlen(players[i].name) != 69) { //check if the string is full (no newline char)
+          players[i].name[strlen(players[i].name) - 1] = '\0'; //remove newline character from name
+        }
+
+        choice = 0;
         printf("\nAvailable token colours:\n");
         for (int j = 0; j < 6; j++)
             if (flag[j] == 0) //if colour is available
@@ -67,15 +73,15 @@ int initialise_players(player players[]) {
         while (scanf("%d", &choice) != 1 || choice < 1 || choice > 6 || flag[choice - 1] == 1) { //validation check
             printf("Please choose one of the above colours: ");
             while(getchar() != '\n'); //removes inavlid input from buffer
-        } 
+        }
         //from colour options, remove colour that has already been chosen
         flag[choice - 1] = 1;
-        
+
         //assign colour to current player
         players[i].col = (enum colour) (choice - 1);
         //initialise the player's tokens in the last column to 0
         players[i].numTokensLastCol = 0;
-        printf("Your token colour is %s!\n", colours[choice - 1]);  
+        printf("Your token colour is %s!\n", colours[choice - 1]);
     }
     return numPlayers;
 }
