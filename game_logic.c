@@ -149,9 +149,9 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 /*
  * Place tokens in the first column of the board
  *
- * Input: board - a 6x9 array of squares that represents the board
- *        players - the array of the players
- *        numPlayers - the number of players
+ * Input:     board - a 6x9 array of squares that represents the board
+ *          players - the array of the players
+ *       numPlayers - the number of players
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
 
