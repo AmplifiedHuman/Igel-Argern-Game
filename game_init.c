@@ -28,7 +28,6 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
     }
 }
 
-
 /*
  * This function creates players for the first time
  *

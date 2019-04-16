@@ -57,6 +57,9 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]) {
 	printf("     1   2   3   4   5   6   7   8   9\n\n");
 }
 
+/*
+ * Prints lines for constructing the board
+ */
 void printLine() {
 	printf("   -------------------------------------\n");
 }

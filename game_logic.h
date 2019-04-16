@@ -19,7 +19,6 @@ void printLine();
  */
 bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col);
 
-
 /*
  * Returns true if the given row is empty or if all tokens in the row are blocked
  * 
@@ -27,7 +26,6 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
  *          row - the row index of the square being checked
  */
 bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row);
-
 
 /*
  * Returns true if the square in selected row and column is blocked 
@@ -38,7 +36,6 @@ bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row);
  *       column - the column index of the square being checked
  */
 bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
-
 
 /*
  * Return true if a player has at least 3 tokens in last column, i.e.
@@ -51,7 +48,6 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
  */
 bool checkWin(player players[], int numPlayers, int *winner);
 
-
 /*
  * Place a token on the stack
  *
@@ -60,7 +56,6 @@ bool checkWin(player players[], int numPlayers, int *winner);
  */
 void push(token **top, enum colour col);
 
-
 /*
  * Remove a token from the stack
  *
@@ -68,14 +63,12 @@ void push(token **top, enum colour col);
  */
 void pop(token **top);
 
-
 /*
  * Prints the board
  *
  * Input: board - a 6x9 array of squares that represents the board
  */
 void print_board(square board[NUM_ROWS][NUM_COLUMNS]);
-
 
 /*
  * Place tokens in the first column of the board
@@ -85,8 +78,6 @@ void print_board(square board[NUM_ROWS][NUM_COLUMNS]);
  *        numPlayers - the number of players
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers);
-
-
 
 /*
  * Manages the logic of the game

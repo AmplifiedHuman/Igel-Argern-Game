@@ -35,7 +35,6 @@ typedef struct player {
 	int numTokensLastCol;
 } player;
 
-
 /*
  * This function creates the board for the first time
  *

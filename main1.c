@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "game_logic.h"
 /*
- * Main function to initialise board, players, place tokens and play game
+ * Main function to initialise board & players, place tokens and play game
  */
 int main(void) {
 	//seeding the random number generator, used in rolling a dice
