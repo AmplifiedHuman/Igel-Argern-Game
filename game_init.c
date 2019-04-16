@@ -64,9 +64,11 @@ int initialise_players(player players[]) {
 
         choice = 0;
         printf("\nAvailable token colours:\n");
-        for (int j = 0; j < 6; j++)
-            if (flag[j] == 0) //if colour is available
+        for (int j = 0; j < 6; j++) {
+            if (flag[j] == 0) { //if colour is available
                 printf("Colour %d: %s\n", j+1, colours[j]); //display available colours
+            }
+        }
         printf("Please choose one of the above colours: ");
         fflush(stdout);
 

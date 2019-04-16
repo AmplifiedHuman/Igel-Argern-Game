@@ -62,12 +62,12 @@ void printLine() {
 }
 
 /*
-* Place tokens in the first column of the board
-*
-* Input:     board - a 6x9 array of squares that represents the board
-*          players - the array of the players
-*       numPlayers - the number of players
-*/
+ * Place tokens in the first column of the board
+ *
+ * Input:     board - a 6x9 array of squares that represents the board
+ *          players - the array of the players
+ *       numPlayers - the number of players
+ */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
 
 	int minTokens = 0; //number of tokens in lowest stack
@@ -124,13 +124,13 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 }
 
 /*
-* Returns true if there is a square with minimum number of tokens
-* whose colour is not the same as the player's colour.
-*
-* Input:     board - a 6x9 array of squares that represents the board
-* 		 minTokens - number of tokens in lowest stack
-*              col - player's chosen colour
-*/
+ * Returns true if there is a square with minimum number of tokens
+ * whose colour is not the same as the player's colour.
+ *
+ * Input:     board - a 6x9 array of squares that represents the board
+ * 		 minTokens - number of tokens in lowest stack
+ *              col - player's chosen colour
+ */
 bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum colour col) {
 	//iterate through all rows
 	for (int i = 0; i < NUM_ROWS; i++) {
@@ -143,13 +143,13 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
 	return false;
 }
 
-	/*
-	* Place tokens in the first column of the board
-	*
-	* Input: board - a 6x9 array of squares that represents the board
-	*        players - the array of the players
-	*        numPlayers - the number of players
-	*/
+/*
+ * Place tokens in the first column of the board
+ *
+ * Input: board - a 6x9 array of squares that represents the board
+ *        players - the array of the players
+ *        numPlayers - the number of players
+ */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
 
 
@@ -361,10 +361,10 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 }
 
 /*
-* returns true if a row is empty or all tokens in row are in a deep pit
-*
-* Input: the board and the current row
-*/
+ * Returns true if a row is empty or all tokens in row are in a deep pit
+ *
+ * Input: the board and the current row
+ */
 bool emptyRow(square board[NUM_ROWS][NUM_COLUMNS], int row) {
 	for (int j = 0; j < NUM_COLUMNS - 1; j++) {
 		// if any square in that row is not empty and the row is not blocked return false
@@ -401,12 +401,12 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column) {
 }
 
 /*
-* Return true if a player has at least 3 tokens in last column, i.e.
-* the game has been won
-*
-* Input:    players - the array of players
-*        numPlayers - the number of players
-*/
+ * Return true if a player has at least 3 tokens in last column, i.e.
+ * the game has been won
+ *
+ * Input:    players - the array of players
+ *        numPlayers - the number of players
+ */
 bool checkWin(player players[], int numPlayers, int *winner) {
 	//iterate through all the players
 	for (int i = 0; i < numPlayers; i++) {
@@ -421,11 +421,11 @@ bool checkWin(player players[], int numPlayers, int *winner) {
 }
 
 /*
-* Place a token on the stack
-*
-* Input: top - pointer to topmost token pointer on stack
-*        col - colour of token to be placed on stack
-*/
+ * Place a token on the stack
+ *
+ * Input: top - pointer to topmost token pointer on stack
+ *        col - colour of token to be placed on stack
+ */
 void push(token **top, enum colour col) {
 	//allocate memory to temporary pointer
 	token *temp = malloc(sizeof(token));
@@ -443,10 +443,10 @@ void push(token **top, enum colour col) {
 }
 
 /*
-* Remove a token from the stack
-*
-* Input: top - pointer to topmost token pointer on stack
-*/
+ * Remove a token from the stack
+ *
+ * Input: top - pointer to topmost token pointer on stack
+ */
 void pop(token **top) {
 	//if the stack is empty, then exit
 	if (*top == NULL) {
