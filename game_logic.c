@@ -1,9 +1,9 @@
 #include "game_logic.h"
 /*
- * Returns the first letter associated with the color of the token
+ * Returns the first letter associated with the colour of the token
  *
  * Input: t - pointer to a token
- * Output: initial of the color of the token
+ * Output: initial of the colour of the token
  */
 char print_token(token *t) {
 	if (t->col == RED)    return 'R';
@@ -96,7 +96,7 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 				}
 				//checks if there is a lowest stack with a different colour
 				else if (minWithDiffColour(board, minTokens, players[j].col) &&
-				//checks if player color matches square colour
+				//checks if player colour matches square colour
 				board[selectedSquare][0].stack->col == players[j].col &&
 				//checks if stack is not null
 				board[selectedSquare][0].stack != NULL) {

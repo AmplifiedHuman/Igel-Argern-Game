@@ -45,7 +45,7 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]);
 /*
  * This function creates players for the first time
  *
- * Input: the array of players to be initialized
+ * Input: the array of players to be initialised
  * Output: The number of players of the game
  */
 int initialise_players(player players[]);
