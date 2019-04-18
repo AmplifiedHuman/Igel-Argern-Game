@@ -81,6 +81,8 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 	//each player has to place all 4 of their tokens, turn by turn
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < numPlayers; j++) {
+			//display the board
+			print_board(board);
 			//reset valid input flag to false
 			isValidInput = false;
 			//loop as long as selected square is invalid
@@ -121,7 +123,6 @@ void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int num
 			if (((numPlayers * i) + j + 1) % NUM_ROWS == 0) {
 				minTokens++;
 			}
-			print_board(board);
 		}
 	}
 }
@@ -198,9 +199,9 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 
 			//part B of gameplay: optional sideways move
 			do {
-				printf("1. Move a token sideways.\n");
-				printf("2. Pass sideways move.\n");
-				printf("Enter choice: ");
+				printf("1. Move a token sideways (up/down)\n");
+				printf("2. Pass sideways move\n");
+				printf("Enter choice (1 or 2): ");
 				scanf("%d", &op);
 				// removes extra characters from buffer
 				while (getchar() != '\n');
@@ -213,7 +214,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 			}
 			//if user chooses option 1, check if a sideways move is possible
 			else {
-				printf("Move a token sideways!");
+				printf("Move a token sideways (up/down)!");
 				printf("\nPossible squares: ");
 				for (int j = 0; j < NUM_ROWS; j++) {
 					for(int k = 0; k < NUM_COLUMNS - 1; k++) {
