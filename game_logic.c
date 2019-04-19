@@ -344,8 +344,16 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 
 				//increment counter if player adds a token to the last column
 				if (forwardChoice + 1 == NUM_COLUMNS) {
-					enum colour winnerColour = board[diceRoll-1][forwardChoice].stack->col;
-					players[(int) winnerColour].numTokensLastCol++;
+					//iterate through all the players
+					for (int k = 0; k < numPlayers; k++)
+					{
+						/*if the colour of token in the last coloumn is a player's colour,
+						  then increment that player's tokens in the last column*/
+						if (board[diceRoll-1][forwardChoice].stack->col == players[k].col) {
+							players[k].numTokensLastCol++;
+							break;
+						}
+					}
 				}
 
 				//remove the token at the current square and also decrement the no. of tokens on square
