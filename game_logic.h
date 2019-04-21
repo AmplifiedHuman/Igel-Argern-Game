@@ -43,8 +43,7 @@ bool blocked(square board[NUM_ROWS][NUM_COLUMNS], int row, int column);
  *
  * Input:    players - the array of players
  *        numPlayers - the number of players
- *            winner - pointer to index of winning player
- *          
+ *            winner - pointer to index of winning player       
  */
 bool checkWin(player players[], int numPlayers, int *winner);
 
