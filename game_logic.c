@@ -321,7 +321,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 				for (int j = 0; j < NUM_COLUMNS - 1; j++) {
 					//checks if square is not empty
 					if (board[diceRoll-1][j].stack != NULL &&
-					//checks if sqaure is normal or it's an unblocked obstacle
+					//checks if square is normal or it's an unblocked obstacle
 					(board[diceRoll-1][j].type == NORMAL || !blocked(board, diceRoll-1, j))) {
 						printf("%d ", j + 1);
 
@@ -347,7 +347,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 					//iterate through all the players
 					for (int k = 0; k < numPlayers; k++)
 					{
-						/*if the colour of token in the last coloumn is a player's colour,
+						/*if the colour of token in the last column is a player's colour,
 						  then increment that player's tokens in the last column*/
 						if (board[diceRoll-1][forwardChoice].stack->col == players[k].col) {
 							players[k].numTokensLastCol++;

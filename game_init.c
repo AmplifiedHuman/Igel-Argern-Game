@@ -73,7 +73,7 @@ int initialise_players(player players[]) {
 
         while (scanf("%d", &choice) != 1 || choice < 1 || choice > 6 || flag[choice - 1] == 1) { //validation check
             printf("Please choose one of the above colours: ");
-            while(getchar() != '\n'); //removes inavlid input from buffer
+            while(getchar() != '\n'); //removes invalid input from buffer
         }
         //from colour options, remove colour that has already been chosen
         flag[choice - 1] = 1;
