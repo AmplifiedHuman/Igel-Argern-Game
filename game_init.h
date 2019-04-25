@@ -51,9 +51,8 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]);
 int initialise_players(player players[]);
 
 /*
- * This function frees all the allocated memory after the game ends
+ * This function frees all allocated memory after the game ends
  *
- * Input: the board
- * Output: -
+ * Input: board - a 6x9 array of squares
  */
 void cleanUp(square board[NUM_ROWS][NUM_COLUMNS]);
