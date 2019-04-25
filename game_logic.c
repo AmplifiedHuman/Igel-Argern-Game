@@ -311,8 +311,8 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 			}
 			else {
 				//choose a token in row (diceRoll) to move forward
-				printf("\nMove a token forward in row %d.", diceRoll);
-				printf("\nColumns from which a token can move forward: ");
+				printf("\nMove a token forward in ROW %d.", diceRoll);
+				printf("\nAvailabe columns from which a token can move forward: ");
 
 				//check all columns except the last column
 				for (int j = 0; j < NUM_COLUMNS - 1; j++) {
@@ -329,7 +329,7 @@ void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPla
 
 				//loop until chosen column is one of the possible columns for token to move forward
 				do {
-					printf("\nChoose which token to move forward in row %d: ", diceRoll);
+					printf("\nChoose a column from which a token can move forward : ");
 					scanf("%d", &forwardChoice);
 					// removes extra characters from buffer
 					while (getchar() != '\n');
