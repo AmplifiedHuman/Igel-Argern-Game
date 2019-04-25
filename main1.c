@@ -33,7 +33,7 @@ int main(void) {
   	play_game(board, players, numPlayers);
 
     //free all allocated memory after the game ends
-    cleanup(board);
+    cleanUp(board);
 
   	return 0;
 }
