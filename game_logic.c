@@ -72,7 +72,6 @@ void printLine() {
  *       numPlayers - the number of players
  */
 void place_tokens(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-
 	int minTokens = 0; //number of tokens in lowest stack
 	int selectedSquare; //row number in first column, square selected by player
 	bool isValidInput = false; //boolean to check for valid input
@@ -155,8 +154,6 @@ bool minWithDiffColour(square board[NUM_ROWS][NUM_COLUMNS], int minTokens, enum 
  *       numPlayers - the number of players
  */
 void play_game(square board[NUM_ROWS][NUM_COLUMNS], player players[], int numPlayers) {
-
-
 	int diceRoll; //The output of the dice roll
 	int op; //option to perform sideways move, 1 to move/2 to pass
 	int winner = -1; //stores index of winning player in players array

@@ -8,7 +8,6 @@
  * Input: board - a 6x9 array of squares
  */
 void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
-
     //iterate through all the rows and columns of the board
     for (int i = 0; i < NUM_ROWS; i++) {
         for (int j = 0; j < NUM_COLUMNS; j++) {
@@ -36,7 +35,6 @@ void initialise_board(square board[NUM_ROWS][NUM_COLUMNS]) {
  * Output: The number of players of the game
  */
 int initialise_players(player players[]) {
-
     //number of players
     int numPlayers = 0;
     //names of token colours
@@ -89,26 +87,26 @@ int initialise_players(player players[]) {
 }
 
 /*
- * This function free all  allocated memory after the game ends
+ * This function frees all allocated memory after the game ends
  *
- * Input: the board
- * Output: -
+ * Input: board - a 6x9 array of squares
  */
-void cleanup(square board[NUM_ROWS][NUM_COLUMNS]) {
-  for (int i = 0; i < NUM_ROWS; i++) {
-    for (int j = 0; j < NUM_COLUMNS; j++) {
-      // skips the square if there are no tokens (board[i][j].stack == NULL)
-      if (board[i][j].stack != NULL) {
-        // keep freeing the tokens until the square is empty (board[i][j].stack == NULL)
-        while (board[i][j].stack != NULL) {
-          //make temporary pointer the top pointer
-          token *temp = board[i][j].stack;
-          //let topmost pointer point to 2nd topmost pointer
-          board[i][j].stack = (board[i][j].stack)->nextPtr;
-          //get rid of the temporary pointer
-          free(temp);
+void cleanUp(square board[NUM_ROWS][NUM_COLUMNS]) {
+    //iterate through all the squares on the board
+    for (int i = 0; i < NUM_ROWS; i++) {
+        for (int j = 0; j < NUM_COLUMNS; j++) {
+            //if the square is not already empty 
+            if (board[i][j].stack != NULL) {
+                //keep freeing the tokens until the square is empty 
+                while (board[i][j].stack != NULL) {
+                    //make temporary pointer the top pointer of the stack
+                    token *temp = board[i][j].stack;
+                    //let topmost pointer point to 2nd topmost pointer
+                    board[i][j].stack = (board[i][j].stack)->nextPtr;
+                    //get rid of the temporary pointer
+                    free(temp);
+                }
+            }
         }
-      }
     }
-  }
 }

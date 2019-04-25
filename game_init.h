@@ -56,4 +56,4 @@ int initialise_players(player players[]);
  * Input: the board
  * Output: -
  */
-void cleanup(square board[NUM_ROWS][NUM_COLUMNS]);
+void cleanUp(square board[NUM_ROWS][NUM_COLUMNS]);
