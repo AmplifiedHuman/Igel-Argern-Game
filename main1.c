@@ -32,8 +32,8 @@ int main(void) {
   	//manages the turns of the game and identifies a winner
   	play_game(board, players, numPlayers);
 
-    //free all allocated memory after the game ends
-    cleanUp(board);
+    	//free all allocated memory after the game ends
+    	cleanUp(board);
 
   	return 0;
 }
