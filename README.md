@@ -1,6 +1,6 @@
 # Igel Ärgern 
 #### COMP10050 Software Engineering Project 1, Assignment 2
-> C implementation of the German board game Igel Ärgern, whose name loosely translates as "Hedgehogs in a Hurry".
+> C implementation of the German board game Igel Ärgern, whose name loosely translates to "Hedgehogs in a Hurry".
 
 ## About The Game
 The standard game is played by 2-6 players on a board with 6 rows and 9 columns. Each player has four tokens (representing hedgehogs) that he or she must move from the left column to the right column. Tokens sharing a square are stacked on top of each other. Only the token on the top of a stack may move.
