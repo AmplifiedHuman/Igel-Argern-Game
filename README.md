@@ -21,3 +21,6 @@ __Windows Users__
 ## Authors
 * [Jason Tee](https://github.com/AmplifiedHuman)
 * [Rajit Banerjee](https://github.com/rajitbanerjee)
+
+#### Grade Received
+A+
