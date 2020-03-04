@@ -3,6 +3,7 @@
 > C implementation of the German board game Igel Ärgern, whose name loosely translates to "Hedgehogs in a Hurry".
 
 ## About The Game
+<img src="game_ss.png" height="500" width="600" >
 The standard game is played by 2-6 players on a board with 6 rows and 9 columns. Each player has four tokens (representing hedgehogs) that he or she must move from the left column to the right column. Tokens sharing a square are stacked on top of each other. Only the token on the top of a stack may move.
 
 On their turn, a player:
