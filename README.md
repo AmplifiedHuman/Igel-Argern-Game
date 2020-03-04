@@ -16,8 +16,14 @@ The winner of the game is the player who can move three of their tokens to the l
 Detailed Rules: [boardgamegeek.com](https://boardgamegeek.com/boardgame/95/igel-argern)
 
 ## Getting Started
-__Windows Users__  
-```Download and run igelArgern.exe ```
+To compile the program, run
+```
+make 
+```
+Then run program by calling
+```
+./main
+```
 ## Authors
 * [Jason Tee](https://github.com/AmplifiedHuman)
 * [Rajit Banerjee](https://github.com/rajitbanerjee)
