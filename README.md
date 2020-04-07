@@ -4,7 +4,7 @@ C implementation of the German board game, *Igel Ärgern* ("Hedgehogs in a Hurry
 
 ## Getting Started
 ### Windows
-1. Download and run the executable file [here](./bin/igelArgern.exe), or
+1. Download and run the executable file [here](https://github.com/AmplifiedHuman/Igel-Argern-Game/raw/master/bin/igelArgern.exe), or
 2. Use the Makefile to compile and run the game as follows (instructions for MINGW):  
 * Enable the ```make``` command:  
 ```$ mingw-get install msys-make```    
