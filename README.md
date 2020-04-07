@@ -39,7 +39,7 @@ the dice roll and moves it one space to the right (i.e., "forward").
 A token that falls into an *obstacle square* is stuck there until every other token has   
 caught up (i.e. no token is placed in a column on the left of the obstacle in any row). 
 
-* The *winner* is the player who can move three of their tokens to the last column of the board.  
+The *winner* is the player who can move three of their tokens to the last column of the board.  
 Detailed rules: [boardgamegeek.com](https://boardgamegeek.com/boardgame/95/igel-argern)
 
 ## Authors
